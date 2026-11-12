@@ -1,0 +1,32 @@
+{
+  "base": "/bundles/ldordo/administration/",
+  "entryPoints": {
+    "ld-ordo": {
+      "css": [
+        "/bundles/ldordo/administration/assets/ld-ordo-BbKePR3M.css"
+      ],
+      "dynamic": [
+        "/bundles/ldordo/administration/assets/index-CfPl02Nn.js",
+        "/bundles/ldordo/administration/assets/index-pM45z7Cr.js",
+        "/bundles/ldordo/administration/assets/index-C0v5OvoA.js",
+        "/bundles/ldordo/administration/assets/index-ChGSDa7Y.js",
+        "/bundles/ldordo/administration/assets/index-D5_iHOF_.js",
+        "/bundles/ldordo/administration/assets/index-CPIje0UA.js"
+      ],
+      "js": [
+        "/bundles/ldordo/administration/assets/ld-ordo-BNiMn4b1.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

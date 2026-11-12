@@ -1,0 +1,17 @@
+{
+    "ld-ordo": {
+        "general": {
+            "mainMenuItem": "Ordo",
+            "description": "Order workflow and control centre"
+        },
+        "overview": {
+            "infoTitle": "Ordo is in development",
+            "infoText": "This will become the control centre for all orders: intake, artwork check, suppliers, in-house production, shipping, payment and invoicing. See docs/KONZEPT.md in the plugin for the roadmap."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "ld_ordo": { "label": "Ordo (order workflow)" }
+        }
+    }
+}

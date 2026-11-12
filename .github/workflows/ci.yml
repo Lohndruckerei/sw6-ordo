@@ -1,0 +1,28 @@
+name: Prüfung
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: PHP-Syntax
+        run: |
+          status=0
+          while IFS= read -r -d '' f; do php -l "$f" > /dev/null || status=1; done < <(find src -name '*.php' -print0)
+          exit $status
+      - name: Snippets de-DE/en-GB vollständig
+        run: node .github/scripts/check-snippets.mjs

@@ -1,0 +1,17 @@
+{
+    "ld-ordo": {
+        "general": {
+            "mainMenuItem": "Ordo",
+            "description": "Auftragsworkflow und Leitstand"
+        },
+        "overview": {
+            "infoTitle": "Ordo ist in Entwicklung",
+            "infoText": "Hier entsteht der Leitstand für alle Aufträge: Annahme, Datenprüfung, Lieferanten, interne Produktion, Versand, Zahlung und Rechnung. Den Fahrplan finden Sie in docs/KONZEPT.md des Plugins."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "ld_ordo": { "label": "Ordo (Auftragsworkflow)" }
+        }
+    }
+}

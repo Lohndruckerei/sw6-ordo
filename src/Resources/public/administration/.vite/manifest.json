@@ -1,0 +1,67 @@
+{
+  "ld-admin-design/component/chip/index.js": {
+    "file": "assets/index-C0v5OvoA.js",
+    "name": "index",
+    "src": "ld-admin-design/component/chip/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.js"
+    ]
+  },
+  "ld-admin-design/component/design-switch/index.js": {
+    "file": "assets/index-CfPl02Nn.js",
+    "name": "index",
+    "src": "ld-admin-design/component/design-switch/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.js"
+    ]
+  },
+  "ld-admin-design/component/status/index.js": {
+    "file": "assets/index-pM45z7Cr.js",
+    "name": "index",
+    "src": "ld-admin-design/component/status/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.js"
+    ]
+  },
+  "ld-admin-design/component/tabs/index.js": {
+    "file": "assets/index-D5_iHOF_.js",
+    "name": "index",
+    "src": "ld-admin-design/component/tabs/index.js",
+    "isDynamicEntry": true
+  },
+  "ld-admin-design/component/transport-chip/index.js": {
+    "file": "assets/index-ChGSDa7Y.js",
+    "name": "index",
+    "src": "ld-admin-design/component/transport-chip/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.js"
+    ]
+  },
+  "main.js": {
+    "file": "assets/ld-ordo-BNiMn4b1.js",
+    "name": "ld-ordo",
+    "src": "main.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "ld-admin-design/component/design-switch/index.js",
+      "ld-admin-design/component/status/index.js",
+      "ld-admin-design/component/chip/index.js",
+      "ld-admin-design/component/transport-chip/index.js",
+      "ld-admin-design/component/tabs/index.js",
+      "module/ld-ordo/page/lo-overview/index.js"
+    ],
+    "css": [
+      "assets/ld-ordo-BbKePR3M.css"
+    ]
+  },
+  "module/ld-ordo/page/lo-overview/index.js": {
+    "file": "assets/index-CPIje0UA.js",
+    "name": "index",
+    "src": "module/ld-ordo/page/lo-overview/index.js",
+    "isDynamicEntry": true
+  }
+}

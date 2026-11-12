@@ -1,0 +1,668 @@
+// GENERIERT aus ld-admin-design 1.0.0 (1d3d326) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen.
+// Lohndruckerei Admin-Design: A · Hafen, B · Druckbogen, C · Kompass.
+// Alle Regeln hängen an .lo-design / .lo-design--{a|b|c}; Shopware-Klassen werden nur
+// innerhalb dieses Wurzelelements angepasst. Werte und Regeln: DESIGN.md.
+
+$p-text: var(--color-text-primary-default, #1c1c1c);
+$p-text2: var(--color-text-secondary-default, #52667a);
+$p-text3: var(--color-text-tertiary-default, #8a97a6);
+$p-border: var(--color-border-primary-default, #d1d9e0);
+$p-surface: var(--color-elevation-surface-raised, #ffffff);
+$p-sunken: var(--color-background-tertiary-default, #f0f2f5);
+$p-primary: var(--color-interaction-primary-default, #0870ff);
+
+// ---------- Tokens ----------
+.lo-design {
+    --lo-ok: #14802e;
+    --lo-ok-bg: #e1ffe0;
+    --lo-ok-dot: #36d046;
+    --lo-warn: #975a00;
+    --lo-warn-bg: #fff3e3;
+    --lo-warn-dot: #fbaf18;
+    --lo-err: #c20017;
+    --lo-err-bg: #fff2f0;
+    --lo-err-dot: #e2262a;
+    --lo-off: #696a6e;
+    --lo-off-bg: #eef0f4;
+    --lo-off-dot: #{$p-text3};
+}
+
+.lo-design--a {
+    --lo-brand: #57d9a3;
+    --lo-brand-ink: #0e7a52;
+    --lo-accent: #0870ff;
+    --lo-c1: #0870ff;
+    --lo-c2: #633bc6;
+    --lo-c3: #0f9d8f;
+    --lo-c4: #d97706;
+}
+
+.lo-design--b {
+    --lo-brand: #0b6e79;
+    --lo-brand-ink: #0b6e79;
+    --lo-accent: #e5007e;
+    // Druckfarben: Cyan, Magenta, Gelb, Schwarz (Key)
+    --lo-c1: #009fe3;
+    --lo-c2: #e5007e;
+    --lo-c3: #e0a800;
+    --lo-c4: #2b2b33;
+}
+
+.lo-design--c {
+    --lo-brand: #243758;
+    --lo-brand-ink: #243758;
+    --lo-accent: #ff8a00;
+    --lo-c1: #2f80ed;
+    --lo-c2: #8e44ad;
+    --lo-c3: #16a085;
+    --lo-c4: #e67e22;
+}
+
+// ---------- Schalter „Design A | B | C“ ----------
+.lo-design-switch {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    border: 1px solid $p-border;
+    border-radius: 6px;
+    overflow: hidden;
+    background: $p-surface;
+    font-size: 12px;
+
+    &__label {
+        padding: 0 10px;
+        color: $p-text2;
+        border-right: 1px solid $p-border;
+        line-height: 30px;
+    }
+
+    &__option {
+        min-width: 30px;
+        height: 30px;
+        border: 0;
+        background: none;
+        color: $p-text2;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+            background: $p-sunken;
+        }
+
+        &.is--active {
+            background: var(--lo-brand, #{$p-primary});
+            color: #fff;
+        }
+
+        & + & {
+            border-left: 1px solid $p-border;
+        }
+    }
+}
+
+// ---------- Kategorie-Chip ----------
+.lo-chip {
+    --lo-t: var(--lo-c1);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    & + & {
+        margin-left: 4px;
+    }
+}
+
+.lo-design--a .lo-chip {
+    border-radius: 4px;
+    background: $p-sunken;
+    color: $p-text;
+
+    .lo-chip__icon {
+        color: var(--lo-t);
+    }
+}
+
+.lo-design--b .lo-chip {
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--lo-t) 13%, transparent);
+    color: color-mix(in srgb, var(--lo-t) 72%, #1c1c1c);
+    box-shadow: inset 3px 0 0 var(--lo-t);
+}
+
+.lo-design--c .lo-chip {
+    padding: 0 4px 0 0;
+    background: none;
+    color: $p-text;
+    font-weight: 500;
+
+    .lo-chip__icon {
+        display: none;
+    }
+
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        background: var(--lo-t);
+    }
+}
+
+// ---------- Status ----------
+.lo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    &--ok { background: var(--lo-ok-bg); color: var(--lo-ok); }
+    &--warn { background: var(--lo-warn-bg); color: var(--lo-warn); }
+    &--err { background: var(--lo-err-bg); color: var(--lo-err); }
+    &--off { background: var(--lo-off-bg); color: var(--lo-off); }
+}
+
+.lo-design--a .lo-status {
+    padding: 1px 8px;
+    border-radius: 4px;
+
+    .lo-status__icon {
+        display: none;
+    }
+}
+
+.lo-design--c .lo-status {
+    padding: 0;
+    background: none;
+    color: $p-text;
+    font-weight: 500;
+
+    .lo-status__icon {
+        display: none;
+    }
+
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    &--ok::before { background: var(--lo-ok-dot); }
+    &--warn::before { background: var(--lo-warn-dot); }
+    &--err::before { background: var(--lo-err-dot); }
+    &--off::before { background: var(--lo-off-dot); }
+}
+
+// ---------- Reiter (B horizontal, C vertikal) ----------
+.lo-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid $p-border;
+
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: -1px;
+        padding: 10px 14px;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        background: none;
+        color: $p-text2;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &:hover {
+            color: $p-text;
+        }
+
+        &.is--active {
+            border-bottom-color: var(--lo-brand);
+            color: var(--lo-brand-ink);
+            font-weight: 600;
+        }
+    }
+
+    &__count {
+        min-width: 20px;
+        padding: 0 7px;
+        border-radius: 99px;
+        background: $p-sunken;
+        color: $p-text2;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 18px;
+        text-align: center;
+    }
+
+    &__item.is--warn &__count {
+        background: var(--lo-warn-bg);
+        color: var(--lo-warn);
+    }
+
+    &__warn {
+        color: var(--lo-warn-dot);
+    }
+
+    &--vertical {
+        position: sticky;
+        top: 12px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 2px;
+        margin: 0;
+        padding: 8px;
+        border: 1px solid $p-border;
+        border-radius: 8px;
+        background: $p-surface;
+
+        .lo-tabs__group {
+            padding: 10px 10px 4px;
+            color: $p-text3;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .lo-tabs__item {
+            width: 100%;
+            margin: 0;
+            padding: 9px 10px;
+            border: 0;
+            border-radius: 6px;
+            color: $p-text;
+            text-align: left;
+
+            .lo-tabs__icon {
+                color: $p-text2;
+            }
+
+            .lo-tabs__count {
+                margin-left: auto;
+            }
+
+            &.is--active {
+                background: color-mix(in srgb, var(--lo-accent) 12%, transparent);
+                color: $p-text;
+
+                .lo-tabs__icon {
+                    color: var(--lo-accent);
+                }
+            }
+        }
+    }
+}
+
+// ---------- Kopfkarte der Detailseite (B, C) ----------
+.lo-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    border: 1px solid $p-border;
+    border-radius: 8px;
+    background: $p-surface;
+
+    &__icon {
+        display: grid;
+        flex: none;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--lo-brand) 14%, transparent);
+        color: var(--lo-brand-ink);
+    }
+
+    &__main {
+        min-width: 0;
+    }
+
+    &__title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        margin-top: 4px;
+        color: $p-text2;
+        font-size: 13px;
+    }
+
+    &__chips,
+    &__stats {
+        margin-left: auto;
+    }
+
+    &__stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    &__stat {
+        display: flex;
+        flex-direction: column;
+        color: $p-text2;
+        font-size: 12px;
+
+        b {
+            color: $p-text;
+            font-size: 16px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        &.is--warn b {
+            color: var(--lo-warn);
+        }
+    }
+}
+
+.lo-design--b .lo-header {
+    border-top: 4px solid var(--lo-brand);
+}
+
+// ---------- Detailseite C: Seitennavigation + Inhalt ----------
+.lo-split {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: minmax(0, 1fr);
+
+        .lo-tabs--vertical {
+            position: static;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .lo-tabs__group {
+                display: none;
+            }
+
+            .lo-tabs__item {
+                width: auto;
+            }
+        }
+    }
+}
+
+// ---------- Seiteninhalt über randlosen Listen ----------
+// An den Inhaltsbereich einer Listenseite setzen: Filter, Kennzahlen, Kacheln bekommen 24 px Rand.
+.lo-content {
+    > .lo-filters,
+    > .lo-kpis,
+    > .lo-toolbar,
+    > .lo-tiles,
+    > .sw-pagination {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    > .lo-filters,
+    > .lo-kpis {
+        margin-top: 16px;
+    }
+}
+
+// ---------- Liste: Filterchips (B) ----------
+.lo-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.lo-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border: 1px solid $p-border;
+    border-radius: 99px;
+    background: $p-surface;
+    color: $p-text;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+
+    b {
+        color: $p-text2;
+        font-weight: 600;
+    }
+
+    &.is--active {
+        border-color: var(--lo-brand);
+        background: color-mix(in srgb, var(--lo-brand) 14%, transparent);
+        color: var(--lo-brand-ink);
+    }
+}
+
+// ---------- Liste: Kennzahlen, Werkzeugleiste, Kacheln (C) ----------
+.lo-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.lo-kpi {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid $p-border;
+    border-radius: 8px;
+    background: $p-surface;
+    color: $p-text;
+    text-align: left;
+    cursor: pointer;
+
+    b {
+        display: block;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+    }
+
+    small {
+        color: $p-text2;
+        font-size: 12px;
+    }
+
+    &--all .mt-icon { color: var(--lo-brand-ink); }
+    &--ok .mt-icon { color: var(--lo-ok); }
+    &--warn .mt-icon { color: var(--lo-warn-dot); }
+    &--err .mt-icon { color: var(--lo-err); }
+    &--off .mt-icon { color: $p-text3; }
+
+    &.is--active {
+        border-color: var(--lo-accent);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--lo-accent) 20%, transparent);
+    }
+}
+
+.lo-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.lo-seg {
+    display: inline-flex;
+    margin-left: auto;
+    border: 1px solid $p-border;
+    border-radius: 6px;
+    overflow: hidden;
+
+    button {
+        display: flex;
+        padding: 6px 10px;
+        border: 0;
+        background: $p-surface;
+        color: $p-text2;
+        cursor: pointer;
+
+        &.is--active {
+            background: $p-sunken;
+            color: $p-text;
+        }
+    }
+}
+
+.lo-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.lo-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid $p-border;
+    border-radius: 8px;
+    background: $p-surface;
+    color: $p-text;
+    text-align: left;
+    text-decoration: none;
+
+    &:hover {
+        border-color: var(--lo-accent);
+    }
+
+    &.is--inactive {
+        opacity: .65;
+    }
+
+    &__top {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        b {
+            display: block;
+            font-size: 14.5px;
+        }
+
+        small {
+            color: $p-text3;
+            font-size: 12px;
+        }
+    }
+
+    &__status {
+        margin-left: auto;
+    }
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        padding-top: 10px;
+        border-top: 1px solid $p-border;
+        color: $p-text2;
+        font-size: 12.5px;
+    }
+}
+
+// ---------- Icon-Kachel, Namenszelle, Hilfsklassen ----------
+.lo-sicon {
+    display: grid;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--lo-brand) 14%, transparent);
+    color: var(--lo-brand-ink);
+
+    &--large {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+    }
+
+    &.is--off {
+        background: var(--lo-off-bg);
+        color: $p-text3;
+    }
+}
+
+.lo-namecell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    a {
+        font-weight: 600;
+    }
+
+    small {
+        display: block;
+        color: $p-text3;
+        font-size: 12px;
+    }
+}
+
+.lo-muted {
+    color: $p-text3;
+}
+
+// ---------- Leere Zustände ----------
+.lo-empty-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.lo-empty-step {
+    padding: 5px 10px;
+    border: 1px dashed $p-border;
+    border-radius: 6px;
+    color: $p-text2;
+    font-size: 12.5px;
+}
+
+// Design B: Icon leerer Zustände in Markenfarbe (nur im eigenen Wurzelelement)
+.lo-design--b .sw-empty-state__icon,
+.lo-design--b .sw-empty-state .mt-icon {
+    color: var(--lo-brand-ink);
+}

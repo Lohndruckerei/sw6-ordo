@@ -1,0 +1,36 @@
+{
+    "name": "lohndruckerei/ld-ordo",
+    "description": "Ordo – Auftragsmanagement und Leitstand: Auftragsannahme, Terminbestätigung, Lieferantenzuordnung, Zahlung, Rechnung, Kommunikation und Archiv. (in Entwicklung)",
+    "type": "shopware-platform-plugin",
+    "version": "0.1.0",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Lohndruckerei"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "shopware/core": "~6.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lohndruckerei\\Ordo\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Lohndruckerei\\Ordo\\LdOrdo",
+        "label": {
+            "de-DE": "Ordo – Auftragsworkflow",
+            "en-GB": "Ordo – Order workflow"
+        },
+        "description": {
+            "de-DE": "(in Entwicklung) Auftragsmanagement und Leitstand: Auftragsannahme, Terminbestätigung, Lieferantenzuordnung, Zahlung, Rechnung, Kommunikation und Archiv.",
+            "en-GB": "(in development) Order management and control centre: order intake, date confirmation, supplier routing, payment, invoicing, communication and archive."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://www.lohndruckerei.eu",
+            "en-GB": "https://www.lohndruckerei.eu"
+        }
+    }
+}
