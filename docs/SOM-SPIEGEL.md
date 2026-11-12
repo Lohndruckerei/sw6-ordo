@@ -38,3 +38,14 @@ Ergebnis kommt nach `docs/SOM-AUSWERTUNG.md`: Statusliste und Übergänge, Bilds
 Mailtexte und -anlässe, Felder je Auftrag, Sonderfälle, Kennzahlen. Daraus werden Statusmodell
 (KONZEPT 4) und offene Entscheidungen (KONZEPT 11) geschärft; nichts wird 1:1 übernommen, ohne es mit
 dem Benutzer abzustimmen.
+
+## Umgesetzt (2026-11-12)
+
+- Ordner `docker/som-spiegel/` im Oberverzeichnis: `docker-compose.yml`, `Dockerfile` (PHP 7.4 + Apache wie
+  XAMPP, Erweiterungen aus der php.ini), `proxy.conf`. Daten in `daten/` (nicht versioniert).
+- SOM-PC: XAMPP, PHP 7.4.33, MariaDB 10.4.27, Datenbank `somsystem` (62 Tabellen, InnoDB), Code unter
+  `C:\xampp\htdocs\som`, Apache auf Port 1234.
+- Start: `cd docker/som-spiegel && docker compose up -d` → SOM http://localhost:1234/som/ ,
+  abgefangene Mails http://localhost:8025 . Ende der Auswertung: `docker compose down -v` und `daten/` löschen.
+- Geprüft: Der SOM-Container erreicht weder das Internet noch das Original (10.167.80.235).
+- Code wird unter `daten/code/som/` erwartet (entpacktes Verzeichnis `som`).
