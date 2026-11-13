@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lohndruckerei\Ordo\Controller\Api;
 
 use Lohndruckerei\Ordo\Service\OrderFileService;
+use Lohndruckerei\Ordo\Service\PositionState;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\StateMachine\Exception\IllegalTransitionException;
@@ -58,6 +59,9 @@ class OrdoController extends AbstractController
         $reason = \is_string($reason) ? mb_substr(trim($reason), 0, self::MAX_REASON) : null;
         if ($action === 'hold' && ($reason === null || $reason === '')) {
             return $this->error('Zum Anhalten bitte einen Grund angeben, z. B. „Rückfrage zur Folienfarbe offen“.');
+        }
+        if (str_starts_with($action, PositionState::MOVE_PREFIX) && ($reason === null || $reason === '')) {
+            return $this->error('Zum Weiterleiten bitte einen Grund angeben, z. B. „Kaschierung entfällt, direkt in den Versand“.');
         }
 
         try {

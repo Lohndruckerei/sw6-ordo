@@ -63,6 +63,35 @@ final class PositionState
 
     public const FINISHED = [self::SHIPPED, self::DELIVERED, self::CANCELLED];
 
+    /**
+     * Arbeitsbereiche (KONZEPT 7): welche Status in welcher Warteschlange liegen. Ein Status darf in mehreren
+     * Bereichen stehen (freigegeben: Kundenservice bestellt beim Lieferanten, Produktion startet intern).
+     */
+    public const AREAS = [
+        'service' => [self::NEW, self::AWAITING_INFO, self::AWAITING_PAYMENT, self::RELEASED, self::SUPPLIER_ORDERED, self::ON_HOLD],
+        'artwork' => [self::AWAITING_ARTWORK, self::ARTWORK_CHECK, self::ARTWORK_REJECTED, self::AWAITING_APPROVAL],
+        'production' => [self::RELEASED, self::IN_PRODUCTION],
+        'shipping' => [self::READY_TO_SHIP],
+    ];
+
+    /** „Abschließen“ an einer Station: Status => Aktion zum nächsten Schritt. */
+    public const COMPLETE = [
+        self::ARTWORK_CHECK => 'release',
+        self::RELEASED => 'start_production',
+        self::IN_PRODUCTION => 'ready',
+        self::READY_TO_SHIP => 'ship',
+    ];
+
+    /** Weiterleiten an eine beliebige Station (überspringen oder zurückschieben), Aktion `move_<status>`, Grund Pflicht. */
+    public const MOVE_PREFIX = 'move_';
+
+    /** Ziele fürs Weiterleiten; Anhalten und Stornieren haben eigene Aktionen, „Neu“ ist kein Ziel. */
+    public const MOVE_TARGETS = [
+        self::AWAITING_INFO, self::AWAITING_ARTWORK, self::ARTWORK_CHECK, self::ARTWORK_REJECTED, self::AWAITING_APPROVAL,
+        self::AWAITING_PAYMENT, self::RELEASED, self::SUPPLIER_ORDERED, self::IN_PRODUCTION, self::READY_TO_SHIP,
+        self::SHIPPED, self::DELIVERED,
+    ];
+
     /** Aktion => Zielstatus */
     public const ACTIONS = [
         'request_info' => self::AWAITING_INFO,
@@ -113,6 +142,12 @@ final class PositionState
         $add('hold', [self::NEW, self::AWAITING_INFO, self::AWAITING_ARTWORK, self::ARTWORK_CHECK, self::ARTWORK_REJECTED,
             self::AWAITING_APPROVAL, self::AWAITING_PAYMENT, self::RELEASED, self::SUPPLIER_ORDERED, self::IN_PRODUCTION, self::READY_TO_SHIP]);
         $add('cancel', array_values(array_diff(array_keys(self::STATES), self::FINISHED)));
+        // Weiterleiten: aus jedem nicht abgeschlossenen Status (auch Versendet, falls zurück) an jede Station
+        foreach (self::MOVE_TARGETS as $to) {
+            foreach (array_diff(array_keys(self::STATES), [self::DELIVERED, self::CANCELLED, $to]) as $from) {
+                $result[] = [self::MOVE_PREFIX . $to, $from, $to];
+            }
+        }
 
         return $result;
     }

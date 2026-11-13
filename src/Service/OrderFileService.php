@@ -11,6 +11,7 @@ use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Order\OrderCollection;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Api\Exception\MissingPrivilegeException;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -115,6 +116,10 @@ class OrderFileService
     {
         $before = $this->position($positionId, $context);
         $from = $before->getStateMachineState()?->getTechnicalName();
+        if (!OrdoAcl::mayHandle($from, $context)) {
+            // Arbeitsbereiche: Produktion, Datenprüfung und Versand handeln nur in ihrer eigenen Warteschlange
+            throw new MissingPrivilegeException([OrdoAcl::EDITOR]);
+        }
 
         $this->stateMachineRegistry->transition(
             new Transition(PositionState::ENTITY, $positionId, $action, PositionState::FIELD),
@@ -147,6 +152,9 @@ class OrderFileService
     public function availableTransitions(string $positionId, Context $context): array
     {
         $result = [];
+        if (!OrdoAcl::mayHandle($this->position($positionId, $context)->getStateMachineState()?->getTechnicalName(), $context)) {
+            return $result;
+        }
         foreach ($this->stateMachineRegistry->getAvailableTransitions(PositionState::ENTITY, $positionId, PositionState::FIELD, $context) as $transition) {
             $result[] = [
                 'action' => $transition->getActionName(),

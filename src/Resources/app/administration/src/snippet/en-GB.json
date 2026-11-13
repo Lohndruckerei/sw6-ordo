@@ -80,6 +80,59 @@
             "positions_added": "{count} items added",
             "state_changed": "{position}: {from} → {to}",
             "note": "Note"
+        },
+        "transition": {
+            "forward": "Forward",
+            "forwardButton": "Forward",
+            "forwardText": "Move “{position}” to another station – you can also skip or go back.",
+            "target": "Target station",
+            "targetHelp": "State the position moves to. Example: “Ready to ship” if finishing is not needed.",
+            "reasonPlaceholder": "e.g. no lamination needed, straight to shipping"
+        },
+        "workspace": {
+            "title": "Ordo workspace",
+            "areasLabel": "Work areas",
+            "toAdministration": "To administration",
+            "logout": "Log out",
+            "back": "Back to queue",
+            "openWindow": "Open workspace",
+            "openWindowHelp": "Opens the full-screen workspace without the Shopware menu in its own window.",
+            "filterLabel": "Filter by state",
+            "filterAll": "All",
+            "columnOrder": "Order",
+            "columnActions": "Actions",
+            "openFile": "File",
+            "emptyTitle": "Nothing to do",
+            "emptyText": "No position is waiting in this area. New orders appear here automatically.",
+            "noAreaTitle": "No work area assigned",
+            "noAreaText": "Your role has no Ordo area yet. Ask the administrator to assign e.g. the role “Ordo – Produktion”.",
+            "areas": {
+                "chef": {
+                    "title": "Control centre",
+                    "tab": "Manager",
+                    "info": "All open positions of every station. The figures above show where work piles up – click one to filter, e.g. “Awaiting payment”."
+                },
+                "service": {
+                    "title": "Customer service",
+                    "tab": "Service",
+                    "info": "New orders, queries, payment and released items. The file shows the whole order; “Forward” sends a position to any station, e.g. back to artwork check."
+                },
+                "artwork": {
+                    "title": "Artwork check",
+                    "tab": "Artwork",
+                    "info": "Positions whose artwork is missing, being checked or awaiting customer approval. “Release” finishes the check; faulty files via “Forward” → “Artwork rejected” with a reason."
+                },
+                "production": {
+                    "title": "Production",
+                    "tab": "Production",
+                    "info": "Released positions and work in progress, oldest order first. “Start production” begins, “Ready to ship” finishes. To skip or return a station use “Forward”."
+                },
+                "shipping": {
+                    "title": "Shipping",
+                    "tab": "Shipping",
+                    "info": "Positions ready to ship. “Shipped” finishes; label and delivery note follow with the shipping workspace (roadmap step 9)."
+                }
+            }
         }
     },
     "global": {
@@ -91,6 +144,18 @@
         "permissions": {
             "ld_ordo": {
                 "label": "Ordo (order workflow)"
+            }
+        },
+        "additional_permissions": {
+            "ld_ordo": {
+                "label": "Ordo – workspaces",
+                "chef": "Manager: all areas, key figures",
+                "service": "Customer service: all orders, any state",
+                "artwork": "Artwork check (queue)",
+                "production": "Production (queue)",
+                "shipping": "Shipping (queue)",
+                "purchase": "Purchase price and margin (requires Mensura purchase right)",
+                "admin": "Workflow settings (coming)"
             }
         }
     }

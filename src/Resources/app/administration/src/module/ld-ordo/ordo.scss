@@ -92,3 +92,130 @@
         font-style: italic;
     }
 }
+
+// ---------- Vollbild-Arbeitsplatz (eigene Route ohne Shopware-Menü) ----------
+.lo-workspace {
+    min-height: 100vh;
+    background: var(--color-background-secondary-default);
+    color: var(--color-text-primary-default);
+
+    &__bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 16px;
+        padding: 8px 24px;
+        border-top: 4px solid var(--lo-brand);
+        border-bottom: 1px solid var(--color-border-secondary-default);
+        background: var(--color-elevation-surface-raised);
+    }
+
+    &__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--lo-brand-ink);
+    }
+
+    // Reiter in der Kopfleiste: ohne eigenen Rand
+    &__tabs {
+        margin: 0;
+        border-bottom: 0;
+    }
+
+    &__spacer {
+        flex: 1;
+    }
+
+    &__user {
+        color: var(--color-text-secondary-default);
+    }
+
+    &__main {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    &__heading {
+        margin: 0 0 16px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    &__back {
+        margin-bottom: 16px;
+    }
+
+    &__queue {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--color-elevation-surface-raised);
+        border: 1px solid var(--color-border-secondary-default);
+        border-radius: 8px;
+
+        th,
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--color-border-secondary-default);
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            font-size: 13px;
+            color: var(--color-text-secondary-default);
+        }
+
+        th.lo-num,
+        td.lo-num {
+            text-align: right;
+        }
+    }
+
+    &__order {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    // große Knöpfe an den Arbeitsplätzen (KONZEPT 7, E10)
+    &__actions {
+        width: 1%;
+        white-space: nowrap;
+
+        .mt-button + .mt-button {
+            margin-left: 8px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        &__main {
+            padding: 16px;
+        }
+
+        &__queue {
+            th:nth-child(3),
+            td:nth-child(3) {
+                display: none;
+            }
+        }
+
+        &__actions {
+            white-space: normal;
+
+            .mt-button {
+                margin: 4px 0 0;
+                width: 100%;
+            }
+
+            .mt-button + .mt-button {
+                margin-left: 0;
+            }
+        }
+    }
+}

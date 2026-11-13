@@ -18,6 +18,10 @@ export default {
     </template>
     <template #smart-bar-actions>
         <lo-design-switch />
+        <mt-button variant="primary" :title="$tc('ld-ordo.workspace.openWindowHelp')" @click="openWorkspace">
+            <mt-icon name="regular-external-link" size="14px" />
+            {{ $tc('ld-ordo.workspace.openWindow') }}
+        </mt-button>
     </template>
     <template #content>
         <div class="lo-content">
@@ -159,6 +163,13 @@ export default {
                 counts[name] = (await this.repository.searchIds(criteria)).total;
             }));
             this.counts = counts;
+        },
+
+        openWorkspace() {
+            // eigenes Browserfenster; ein zweiter Klick holt dasselbe Fenster nach vorn
+            const url = this.$router.resolve({ name: 'ld.ordo.workspace' }).href;
+            const win = window.open(url, 'ld-ordo-workspace', 'popup=yes,width=1440,height=900');
+            win?.focus();
         },
 
         setFilter(name) {

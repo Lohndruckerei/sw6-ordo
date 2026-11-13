@@ -163,6 +163,24 @@ erreichen keine anderen Shopware-Bereiche. Design aus `ld-admin-design` (Präfix
 Rechte als ACL-Schlüssel `ld_ordo.*` (Bereiche je Arbeitsplatz, `purchase` für EK/Marge, `admin`),
 die Rollen werden in Shopware aus diesen Rechten zusammengestellt; Ordo liefert Vorschläge.
 
+**Umsetzung (Schritt 4):**
+- Vollbild-Arbeitsplatz `#/ordo/<bereich>` (Shopware-`coreRoute`, ohne Menü); Knopf „Arbeitsplatz öffnen“ in der
+  Ordo-Liste öffnet ihn als eigenes Fenster. Akte im Arbeitsplatz unter `#/ordo/<bereich>/akte/<id>`.
+- Rechte: `ld_ordo.viewer`/`editor` (Leitstand) und Zusatzrechte `ld_ordo.chef`, `.service`, `.artwork`,
+  `.production`, `.shipping`, `.purchase` (setzt `ld_mensura.purchase` voraus, Server prüft beide:
+  `OrdoAcl::canSeePurchase`), `.admin` (reserviert für die Workflow-Einstellungen).
+- Warteschlangen je Bereich (`PositionState::AREAS`): Kundenservice = neu, Rückfrage, Zahlung, freigegeben,
+  beim Lieferanten, angehalten · Datenprüfung = Daten fehlen/in Prüfung/fehlerhaft/Freigabe · Produktion =
+  freigegeben, in Produktion · Versand = versandbereit · Chef = alle offenen. Älteste Bestellung zuerst;
+  Termin und Ampel folgen mit Schritt 7.
+- Je Station „Abschließen“ (`PositionState::COMPLETE`, nächster Schritt) und „Weiterleiten“ an jede Station
+  (Aktion `move_<status>`, überspringen oder zurückschieben, Grund Pflicht, protokolliert).
+- Serverseitig (`OrdoAcl::mayHandle`): Wer `ld_ordo.editor` hat (Chef, Kundenservice), schaltet jeden Status;
+  Datenprüfung, Produktion und Versand nur Positionen in ihrer Warteschlange.
+- Rollenvorschläge „Ordo – Chef/Kundenservice/Datenprüfung/Produktion/Versand“ legt die Migration an, wenn der
+  Name fehlt; danach frei änderbar. Benutzer mit nur Ordo-Rechten (plus ggf. Mensura-EK) leitet die
+  Administration von jeder anderen Seite auf den Arbeitsplatz (`workspace-guard.js`); Daten schützt der Server.
+
 **Bedienregeln** (zusätzlich zu `ld-admin-design/DESIGN.md`): Aufgabenliste statt Menüs; Sortierung nach
 Termin, Ampel rot/gelb/grün (nie nur Farbe); eine Hauptaktion je Ansicht; große Schaltflächen an
 Produktions- und Versandplätzen (Touch, Scanner); Hilfetext mit Praxisbeispiel an jedem Feld;
@@ -207,7 +225,7 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | 1 | Gerüst, Dokumentation, Docker, Design-Anbindung ✔ |
 | 2 | SOM-Spiegel aufsetzen und heutigen Ablauf auswerten → Konzept schärfen ✔ (docs/SOM-AUSWERTUNG.md) |
 | 3 | Auftragsakte + Positionsstatus (State Machine), Protokoll, Auftragsliste im Leitstand ✔ (v0.2.0) |
-| 4 | Vollbild-Arbeitsplatz, Rollen und Rechte |
+| 4 | Vollbild-Arbeitsplatz, Rollen und Rechte ✔ (Branch backend/arbeitsplatz) |
 | 5 | Lieferantenzuordnung + gespeicherte Lieferantenbestellungen (LieferLotse), Umleiten/Storno |
 | 6 | Proba Stufe 1 (Upload, Prüfung, Freigabe) und Freigabe-Tor |
 | 7 | Zahlung, Termine (Vectura), Kundenmails |

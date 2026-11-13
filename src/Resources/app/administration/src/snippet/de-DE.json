@@ -80,6 +80,59 @@
             "positions_added": "{count} Positionen ergänzt",
             "state_changed": "{position}: {from} → {to}",
             "note": "Notiz"
+        },
+        "transition": {
+            "forward": "Weiterleiten",
+            "forwardButton": "Weiterleiten",
+            "forwardText": "„{position}“ an eine andere Station geben – auch überspringen oder zurückschieben.",
+            "target": "Ziel-Station",
+            "targetHelp": "Status, in den die Position wechselt. Beispiel: „Versandbereit“, wenn die Weiterverarbeitung entfällt.",
+            "reasonPlaceholder": "z. B. Kaschierung entfällt, direkt in den Versand"
+        },
+        "workspace": {
+            "title": "Ordo-Arbeitsplatz",
+            "areasLabel": "Arbeitsbereiche",
+            "toAdministration": "Zur Administration",
+            "logout": "Abmelden",
+            "back": "Zurück zur Warteschlange",
+            "openWindow": "Arbeitsplatz öffnen",
+            "openWindowHelp": "Öffnet den Vollbild-Arbeitsplatz ohne Shopware-Menü in einem eigenen Fenster.",
+            "filterLabel": "Nach Status filtern",
+            "filterAll": "Alle",
+            "columnOrder": "Auftrag",
+            "columnActions": "Aktionen",
+            "openFile": "Akte",
+            "emptyTitle": "Nichts zu tun",
+            "emptyText": "In diesem Bereich wartet gerade keine Position. Neue Aufträge erscheinen hier automatisch.",
+            "noAreaTitle": "Kein Arbeitsbereich freigegeben",
+            "noAreaText": "Ihrer Rolle ist noch kein Ordo-Bereich zugeordnet. Bitte den Administrator, z. B. die Rolle „Ordo – Produktion“ zuzuweisen.",
+            "areas": {
+                "chef": {
+                    "title": "Leitstand",
+                    "tab": "Chef",
+                    "info": "Alle offenen Positionen aller Stationen. Die Zahlen oben zeigen, wo sich Arbeit staut – ein Klick filtert die Liste, z. B. auf „Warten auf Zahlung“."
+                },
+                "service": {
+                    "title": "Kundenservice",
+                    "tab": "Kundenservice",
+                    "info": "Neue Aufträge, Rückfragen, Zahlung und Freigegebenes. Über die Akte sehen Sie den ganzen Auftrag; „Weiterleiten“ schickt eine Position an jede Station, z. B. zurück in die Datenprüfung."
+                },
+                "artwork": {
+                    "title": "Datenprüfung",
+                    "tab": "Datenprüfung",
+                    "info": "Positionen, deren Druckdaten fehlen, geprüft werden oder auf Kundenfreigabe warten. „Freigeben“ schließt die Prüfung ab; fehlerhafte Daten über „Weiterleiten“ → „Daten fehlerhaft“ mit Grund."
+                },
+                "production": {
+                    "title": "Produktion",
+                    "tab": "Produktion",
+                    "info": "Freigegebene Positionen und laufende Arbeit, älteste Bestellung zuerst. „In Produktion geben“ startet, „Versandbereit“ schließt ab. Eine Station überspringen oder zurückgeben: „Weiterleiten“."
+                },
+                "shipping": {
+                    "title": "Versand",
+                    "tab": "Versand",
+                    "info": "Versandbereite Positionen. „Versendet“ schließt ab; Label und Lieferschein folgen mit dem Versandarbeitsplatz (Fahrplan Schritt 9)."
+                }
+            }
         }
     },
     "global": {
@@ -91,6 +144,18 @@
         "permissions": {
             "ld_ordo": {
                 "label": "Ordo (Auftragsworkflow)"
+            }
+        },
+        "additional_permissions": {
+            "ld_ordo": {
+                "label": "Ordo – Arbeitsplätze",
+                "chef": "Chef: alle Bereiche, Kennzahlen",
+                "service": "Kundenservice: alle Aufträge, jeder Status",
+                "artwork": "Datenprüfung (Warteschlange)",
+                "production": "Produktion (Warteschlange)",
+                "shipping": "Versand (Warteschlange)",
+                "purchase": "EK und Marge (setzt Mensura-Recht EK voraus)",
+                "admin": "Workflow-Einstellungen (folgt)"
             }
         }
     }
