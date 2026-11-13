@@ -49,3 +49,12 @@ dem Benutzer abzustimmen.
   abgefangene Mails http://localhost:8025 . Ende der Auswertung: `docker compose down -v` und `daten/` löschen.
 - Geprüft: Der SOM-Container erreicht weder das Internet noch das Original (10.167.80.235).
 - Code wird unter `daten/code/som/` erwartet (entpacktes Verzeichnis `som`).
+- 2026-11-13: Vollständiger Code (3,9 GB inkl. `plugins/`, `inbox/`, `.git`) entpackt, SOM läuft im Spiegel.
+  Im Spiegel geändert: `includes/config.ini` (Original daneben als `config.ini.original`): `IP_ADDRESS=localhost`,
+  DB auf Container `db`, Shopware-API-URL und -Token gesperrt. Zusätzlicher Benutzer `spiegel` in allen
+  Benutzergruppen, Passwort in `daten/zugang.txt` (nur im Spiegel, nicht im Original).
+- SOM-Menü (Überblick): Arbeitsplatz; Einstellungen (Allgemein, Cron, E-Mail, Aufträge, Benutzer/Gruppen,
+  Felder); Plugins (Archiv, Archivio-Link, Datei-Manager, GLS-API, Import, Kunden-Mitteilung, Lieferanten,
+  PDF-Filler, Shopware-API v5/v6, XML); Stammdaten (Arbeitsplatz, Artikel, Kunden, Vorlage, Lieferanten);
+  Overview; Auftrag; Protokoll. Benutzergruppen: MASTERS, CP Verpackung, LD Aufträge, CP Alle, CP Rip,
+  LD Daten, CP MASTERS.
