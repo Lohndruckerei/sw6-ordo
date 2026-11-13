@@ -1,7 +1,8 @@
 # SOM – Auswertung
 
 Stand: 2026-11-13 · Grundlage: SOM-Spiegel (Code + Datenbank `somsystem`, siehe SOM-SPIEGEL.md).
-Keine personenbezogenen Daten in diesem Dokument. Zugangsdaten werden hier bewusst nicht wiedergegeben.
+**SOM wird nicht nachgebaut.** Die Auswertung zeigt, wie heute gearbeitet wird, und dient nur als
+Ideengeber für Ordo, Proba und Opus. Keine personenbezogenen Daten in diesem Dokument. Zugangsdaten werden hier bewusst nicht wiedergegeben.
 
 ## 1. Kurzfassung
 
@@ -108,13 +109,13 @@ Befunde zum laufenden SOM sind vertraulich und stehen nur lokal im nicht version
 - Lieferanten-Rückmeldungen per XML (PSP) und Paketlink-Mails müssen in Vectura/LieferLotse ankommen.
 - Ordo ersetzt Import und Rückschreiben vollständig; **Übergang** (Parallelbetrieb) planen.
 
-## 8. Offene Fragen an den Benutzer
+## 8. Antworten (2026-11-13)
 
-| # | Frage |
-|---|---|
-| F1 | Bedeutung der Kürzel: CP, PSP, SH, LIN, PXL, DZ, KFL, SW, HSF, KER, HL, DP, COL/COL-D, Wild? |
-| F2 | Rolle von **Coloroprint** (Gruppen „CP …“, Rechnungs-CSV): Partnerbetrieb, Schwesterfirma, Produktionsstandort? Wer produziert intern – Lohndruckerei oder Coloroprint? |
-| F3 | SOM importiert aus **displayhaus.de** (Shopware 5?). Soll Ordo auch Displayhaus-Aufträge führen oder nur den neuen SW6-Shop? |
-| F4 | Lexware: Wird heute aus Lexware fakturiert (Positionstext-Rückschreiben)? Bleibt das bis DATEV? |
-| F5 | Wie lange Parallelbetrieb SOM/Ordo, und sollen alte SOM-Aufträge ins Ordo-Archiv übernommen werden? |
-| F6 | Wird die Android-App bzw. der Scanner heute an den Stationen genutzt? |
+| # | Frage | Antwort |
+|---|---|---|
+| F1 | Kürzel | LIN, PXL, PSP, SH, DZ, KFL, SW, HSF, KER, HL, DP … sind **Hersteller-/Lieferantenkürzel**. Wild, Mimaki A–D, Laminieren, Hand schneiden sind **Stationen der Produktion**. |
+| F2 | Coloroprint | **COL = interne Produktion** → Opus. |
+| F3 | Displayhaus | Displayhaus = Lohndruckerei und wird es in dieser Form nicht mehr geben. **Ordo führt nur Aufträge der Lohndruckerei.** |
+| F4 | Lexware/Rechnung | Lexware fakturiert nicht. Rechnungen erzeugt und versendet heute der **Shopware-5-Shop**; die Buchhaltung lädt **monatlich die DATEV-Datei** herunter und liest sie in **Lexware** ein. |
+| F5 | Parallelbetrieb | **Kein Parallelbetrieb.** Laufende Aufträge möglichst vor dem Umzug abschließen, Rest ggf. übertragen. Kein Archiv-Import aus SOM. |
+| F6 | App/Scanner | Kein Scanner. Eine **Android-App** (Auftrag an die nächste Station weiterleiten, Stand verfolgen) ist eine gute Idee – **eigenes Projekt, später**. |

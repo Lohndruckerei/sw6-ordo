@@ -177,9 +177,9 @@ Marge unter Ziel) mit Sprung in den passenden Arbeitsplatz. Sichtbar je nach Rec
   Zahlungslinks (Anbieter offen) und Erinnerungen.
 - **Rechnung:** Shopware-Rechnung mit E-Rechnung (ZUGFeRD/XRechnung), ausgelöst bei vollständiger
   Lieferung aller Positionen.
-- **DATEV:** erste Stufe Export DATEV-Format (EXTF-Buchungsstapel) + Rechnungsbelege (PDF/XML) je
-  Zeitraum; spätere Stufe DATEV-Online-Schnittstelle (Partnerschaft nötig). Vor eigener Entwicklung
-  vorhandene Shopware-DATEV-Erweiterungen prüfen.
+- **DATEV:** monatliche DATEV-Datei (DATEV-Format, EXTF-Buchungsstapel) + Rechnungsbelege zum Herunterladen
+  wie heute im SW5-Shop; die Buchhaltung liest sie in Lexware ein (Import mit Lexware testen). Vor eigener
+  Entwicklung vorhandene Shopware-6-DATEV-Erweiterungen prüfen.
 - **Archiv:** Aufträge bleiben in Shopware; Ordo bietet eine Archivsuche (Kunde, Nummer, Zeitraum,
   Lieferant, Produkt). Dokumente und Druckdaten unveränderbar; Aufbewahrung: Rechnungen 8 Jahre,
   Geschäftsbriefe 6 Jahre. Druckdaten-Archiv auf externem Server (Proba).
@@ -215,6 +215,7 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | 9 | Versandarbeitsplatz (Vectura), Versandmitteilungen |
 | 10 | Rechnung bei Vollständigkeit, Auftragsänderung mit Preisänderung |
 | 11 | DATEV, Archiv, Dashboard-Kacheln |
+| später | Android-App für Mitarbeiter (Station abschließen, Auftragsstand) – **eigenes Projekt**; Ordo/Opus bieten dafür eine Admin-API |
 
 ## 11. Offene Entscheidungen
 
@@ -224,11 +225,13 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | E2 | Versanddienstleister (GLS laut Vectura; weitere? Spedition?) | GLS zuerst |
 | E3 | Preflight-Werkzeug: callas pdfToolbox (Lizenz) oder Open Source (Ghostscript/qpdf/pdfcpu)? | Stufe 1 Open Source, callas bei Bedarf |
 | E4 | Externer Druckdatenserver: Art (SFTP, NAS, S3) und Aufbewahrungsdauer? | – |
-| E5 | DATEV: Export-Datei an Steuerberater oder DATEV Unternehmen online? Berater-/Mandantennummer, Kontenrahmen (SKR03/04)? | Export-Datei zuerst |
+| E5 | DATEV | **entschieden:** monatliche DATEV-Datei (DATEV-Format/Buchungsstapel) zum Herunterladen, Import durch die Buchhaltung in **Lexware**. Offen: Berater-/Mandantennummer, Kontenrahmen, Format-Test mit Lexware |
 | E6 | Zielmarge: ein Wert, je Produkt/Kalkulation oder je Kundengruppe? | je Kalkulation mit Standardwert |
 | E7 | Fristen: Daten-Nachreichung, Freigabe, Zahlung – wann Erinnerung, wann Storno? | Erinnerung nach 2 und 5 Werktagen, kein automatisches Storno |
-| E8 | Rechnung: erst bei vollständiger Lieferung (gewünscht) – Teilrechnungen bei Teillieferung? | eine Rechnung am Ende, Teilrechnung nur von Hand |
+| E8 | Rechnung: erst bei vollständiger Lieferung (gewünscht) – Teilrechnungen bei Teillieferung? | eine Rechnung am Ende, Teilrechnung nur von Hand. Heute erzeugt und versendet der SW5-Shop die Rechnungen – künftig Shopware 6 |
 | E9 | Eigene kundensichtbare Bestellstatus (z. B. „In Produktion“)? | Status im Kundenkonto aus Ordo anzeigen, Shopware-Status nicht erweitern |
 | E10 | Geräte in Produktion/Versand: Tablets/PCs, Barcode-Scanner, Etiketten- und Lieferscheindrucker? | – |
 | E11 | Wann ist ein Korrekturabzug Pflicht (immer, ab Auftragswert, bei Freiformschnitt, auf Wunsch)? | auf Wunsch + Freiformschnitt |
-| E12 | Ergebnisse der SOM-Auswertung | erledigt: docs/SOM-AUSWERTUNG.md; offene Fragen F1–F6 dort |
+| E12 | Ergebnisse der SOM-Auswertung | erledigt: docs/SOM-AUSWERTUNG.md (nur Ideengeber, kein Nachbau) |
+| E13 | Umstieg | **entschieden:** kein Parallelbetrieb mit SOM; laufende Aufträge vor dem Umzug abschließen, Rest ggf. übertragen; kein Archiv-Import |
+| E14 | Mandant | **entschieden:** nur Aufträge der Lohndruckerei (Displayhaus entfällt) |
