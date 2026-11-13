@@ -18,7 +18,7 @@ in der Administration und sehen nur ihren Bereich (Chef, Kundenservice, Datenpr�
 - [Konzept, Statusmodell, Rollen, Fahrplan, offene Entscheidungen](docs/KONZEPT.md)
 - [Schnittstellen zu Mensura, LieferLotse, Vectura; belegte Namen](docs/INTEGRATION.md)
 - [Recherche Online-Druckereien und Workflow-Software](docs/RECHERCHE.md)
-- [SOM-Spiegel (heutiges Workflowsystem)](docs/SOM-SPIEGEL.md)
+- [SOM-Spiegel (heutiges Workflowsystem)](docs/SOM-SPIEGEL.md) · [SOM-Auswertung](docs/SOM-AUSWERTUNG.md)
 - [Entwicklung, Prüfung, Build](docs/ENTWICKLUNG.md)
 
 ## Installation (Entwicklung)

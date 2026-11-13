@@ -78,6 +78,7 @@ Shopware-Status. Neue Shopware-Status nur, wenn der Kunde sie wirklich sehen mus
 | Status | Bedeutung | Blockiert? | Wer handelt |
 |---|---|---|---|
 | `new` Neu | Bestellung eingegangen, noch nicht geprüft | – | Automatik |
+| `awaiting_info` Warten auf Infos | Rückfrage an den Kunden (z. B. unklare Bestellung, fehlende Kundennummer) | ja | Kunde, Kundenservice |
 | `awaiting_artwork` Daten fehlen | Kunde hat noch keine Druckdaten geliefert | ja („Auftrag verzögert sich“) | Kunde, Erinnerung |
 | `artwork_check` In Datenprüfung | Proba prüft automatisch oder ein Mitarbeiter prüft | – | Datenprüfung |
 | `artwork_rejected` Daten fehlerhaft | Fehlermeldung an Kunden versendet | ja | Kunde |
@@ -204,7 +205,7 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | Schritt | Inhalt |
 |---|---|
 | 1 | Gerüst, Dokumentation, Docker, Design-Anbindung ✔ |
-| 2 | SOM-Spiegel aufsetzen und heutigen Ablauf auswerten → Konzept schärfen |
+| 2 | SOM-Spiegel aufsetzen und heutigen Ablauf auswerten → Konzept schärfen ✔ (docs/SOM-AUSWERTUNG.md) |
 | 3 | Auftragsakte + Positionsstatus (State Machine), Protokoll, Auftragsliste im Leitstand |
 | 4 | Vollbild-Arbeitsplatz, Rollen und Rechte |
 | 5 | Lieferantenzuordnung + gespeicherte Lieferantenbestellungen (LieferLotse), Umleiten/Storno |
@@ -230,4 +231,4 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | E9 | Eigene kundensichtbare Bestellstatus (z. B. „In Produktion“)? | Status im Kundenkonto aus Ordo anzeigen, Shopware-Status nicht erweitern |
 | E10 | Geräte in Produktion/Versand: Tablets/PCs, Barcode-Scanner, Etiketten- und Lieferscheindrucker? | – |
 | E11 | Wann ist ein Korrekturabzug Pflicht (immer, ab Auftragswert, bei Freiformschnitt, auf Wunsch)? | auf Wunsch + Freiformschnitt |
-| E12 | Ergebnisse der SOM-Auswertung (Schritt 2) | – |
+| E12 | Ergebnisse der SOM-Auswertung | erledigt: docs/SOM-AUSWERTUNG.md; offene Fragen F1–F6 dort |
