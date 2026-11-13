@@ -217,21 +217,24 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | 11 | DATEV, Archiv, Dashboard-Kacheln |
 | später | Android-App für Mitarbeiter (Station abschließen, Auftragsstand) – **eigenes Projekt**; Ordo/Opus bieten dafür eine Admin-API |
 
-## 11. Offene Entscheidungen
+## 11. Entscheidungen
 
-| # | Frage | Vorschlag |
+Alle Punkte entschieden am 2026-11-12/13. Neue offene Fragen hier ergänzen.
+
+| # | Thema | Entscheidung |
 |---|---|---|
-| E1 | Zahlungsanbieter für Zahlungslinks (Mollie, PayPal, Stripe, Unzer …)? | vorhandenen Anbieter des Shops nutzen |
-| E2 | Versanddienstleister (GLS laut Vectura; weitere? Spedition?) | GLS zuerst |
-| E3 | Preflight-Werkzeug: callas pdfToolbox (Lizenz) oder Open Source (Ghostscript/qpdf/pdfcpu)? | Stufe 1 Open Source, callas bei Bedarf |
-| E4 | Externer Druckdatenserver: Art (SFTP, NAS, S3) und Aufbewahrungsdauer? | – |
-| E5 | DATEV | **entschieden:** monatliche DATEV-Datei (DATEV-Format/Buchungsstapel) zum Herunterladen, Import durch die Buchhaltung in **Lexware**. Offen: Berater-/Mandantennummer, Kontenrahmen, Format-Test mit Lexware |
-| E6 | Zielmarge: ein Wert, je Produkt/Kalkulation oder je Kundengruppe? | je Kalkulation mit Standardwert |
-| E7 | Fristen: Daten-Nachreichung, Freigabe, Zahlung – wann Erinnerung, wann Storno? | Erinnerung nach 2 und 5 Werktagen, kein automatisches Storno |
-| E8 | Rechnung: erst bei vollständiger Lieferung (gewünscht) – Teilrechnungen bei Teillieferung? | eine Rechnung am Ende, Teilrechnung nur von Hand. Heute erzeugt und versendet der SW5-Shop die Rechnungen – künftig Shopware 6 |
-| E9 | Eigene kundensichtbare Bestellstatus (z. B. „In Produktion“)? | Status im Kundenkonto aus Ordo anzeigen, Shopware-Status nicht erweitern |
-| E10 | Geräte in Produktion/Versand: Tablets/PCs, Barcode-Scanner, Etiketten- und Lieferscheindrucker? | – |
-| E11 | Wann ist ein Korrekturabzug Pflicht (immer, ab Auftragswert, bei Freiformschnitt, auf Wunsch)? | auf Wunsch + Freiformschnitt |
-| E12 | Ergebnisse der SOM-Auswertung | erledigt: docs/SOM-AUSWERTUNG.md (nur Ideengeber, kein Nachbau) |
-| E13 | Umstieg | **entschieden:** kein Parallelbetrieb mit SOM; laufende Aufträge vor dem Umzug abschließen, Rest ggf. übertragen; kein Archiv-Import |
-| E14 | Mandant | **entschieden:** nur Aufträge der Lohndruckerei (Displayhaus entfällt) |
+| E1 | Zahlung | **Standard-Plugins der Zahlungsanbieter**, kein Eigenbau (z. B. Mollie oder Stripe, Auswahl bei Shop-Einrichtung). Zahlarten wie heute: Vorkasse, PayPal, Klarna, Kreditkarte, Rechnung. **Rechnungskauf nur für Wiederverkäufer oder nach manueller Freigabe** (Shopware Rule Builder an der Zahlart + Freigabe-Schalter am Kunden in Ordo). Zahlungslinks/Nachforderungen über den gewählten Anbieter. |
+| E2 | Versand | Interne Produktion versendet mit **GLS**, ein Wechsel des Dienstleisters muss möglich sein (Vectura: Dienstleister austauschbar). **Externe Lieferanten versenden selbst** (DHL, UPS, DPD, Spedition …) – Ordo übernimmt nur deren Sendungsnummern (Versandmitteilung, Tracking-Link je Dienstleister). |
+| E3 | Druckdatenprüfung | **Open Source zuerst** (Ghostscript/qpdf/pdfcpu), **manuelle Prüfung und Freigabe immer möglich**. Schnittstelle so bauen, dass **callas pdfToolbox** später ohne Umbau eingesetzt werden kann. |
+| E4 | Druckdaten-Archiv | **Netzlaufwerk wie heute**; Anbindung vom Shop-Server (SMB/SFTP) bei der Einrichtung klären. |
+| E5 | DATEV | monatliche DATEV-Datei (DATEV-Format/Buchungsstapel) zum Herunterladen, Import durch die Buchhaltung in **Lexware**. Offen: Berater-/Mandantennummer, Kontenrahmen, Probe-Import mit Lexware. |
+| E6 | Zielmarge | **Standardwert + je Mensura-Kalkulation überschreibbar**; Warnung bei Unter- und Überschreiten. |
+| E7 | Fristen | **Erinnern, kein automatisches Storno:** Erinnerung nach 2 und 5 Werktagen (einstellbar), danach Aufgabe für den Kundenservice; Storno nur von Hand. |
+| E8 | Rechnung | eine Rechnung bei vollständiger Lieferung, Teilrechnung nur von Hand; Erzeugung in Shopware 6 (heute SW5-Shop). |
+| E9 | Kundensicht | **klare Stufen je Position** im Kundenkonto („Daten fehlen“, „In Prüfung“, „Freigabe nötig“, „Zahlung offen“, „In Produktion“, „Versendet“) mit Knopf für die nötige Aktion (Upload, Freigabe, Bezahlen). Shopware-Bestellstatus bleiben unverändert. |
+| E10 | Geräte | **PC/Laptop** und **Etiketten-/Labeldrucker** an Produktion und Versand; kein Scanner, keine Tablets. Später evtl. Android-App (eigenes Projekt). Oberfläche also für Maus/Tastatur, aber mit großen Knöpfen. |
+| E11 | Korrekturabzug | **auf Kundenwunsch** (Option im Konfigurator/Checkout) und **wenn die Datenprüfung es verlangt** (Mitarbeiter entscheidet). |
+| E12 | SOM | nur Ideengeber, kein Nachbau (docs/SOM-AUSWERTUNG.md) |
+| E13 | Umstieg | kein Parallelbetrieb mit SOM; laufende Aufträge vor dem Umzug abschließen, Rest ggf. übertragen; kein Archiv-Import |
+| E14 | Mandant | nur Aufträge der Lohndruckerei (Displayhaus entfällt) |
+| E15 | Dateiformate | PDF bevorzugt (volle Prüfung), zusätzlich JPG/PNG/TIFF (nur Maße/Auflösung prüfbar) |
