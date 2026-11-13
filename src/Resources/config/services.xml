@@ -4,5 +4,44 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults autowire="true" autoconfigure="true"/>
+
+        <!-- Entities -->
+        <service id="Lohndruckerei\Ordo\Core\Ordo\Order\OrdoOrderDefinition">
+            <tag name="shopware.entity.definition" entity="ld_ordo_order"/>
+        </service>
+        <service id="Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionDefinition">
+            <tag name="shopware.entity.definition" entity="ld_ordo_position"/>
+        </service>
+        <service id="Lohndruckerei\Ordo\Core\Ordo\Event\OrdoEventDefinition">
+            <tag name="shopware.entity.definition" entity="ld_ordo_event"/>
+        </service>
+
+        <!-- Rückverweise an Shopware-Entities (Bestellung, Position, Status) -->
+        <service id="Lohndruckerei\Ordo\Extension\OrderExtension"/>
+        <service id="Lohndruckerei\Ordo\Extension\OrderLineItemExtension"/>
+        <service id="Lohndruckerei\Ordo\Extension\StateMachineStateExtension"/>
+
+        <!-- Auftragsakte und Status -->
+        <service id="Lohndruckerei\Ordo\Service\OrderFileService">
+            <argument type="service" id="order.repository"/>
+            <argument type="service" id="ld_ordo_order.repository"/>
+            <argument type="service" id="ld_ordo_position.repository"/>
+            <argument type="service" id="ld_ordo_event.repository"/>
+            <argument type="service" id="user.repository"/>
+            <argument type="service" id="Shopware\Core\System\StateMachine\StateMachineRegistry"/>
+        </service>
+
+        <service id="Lohndruckerei\Ordo\Subscriber\OrderPlacedSubscriber"/>
+
+        <service id="Lohndruckerei\Ordo\Command\OrderSyncCommand">
+            <argument type="service" id="order.repository"/>
+            <argument type="service" id="Lohndruckerei\Ordo\Service\OrderFileService"/>
+        </service>
+
+        <service id="Lohndruckerei\Ordo\Controller\Api\OrdoController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>

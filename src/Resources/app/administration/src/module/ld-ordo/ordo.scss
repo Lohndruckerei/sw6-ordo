@@ -1,0 +1,94 @@
+// Ordo-eigene Seitenstile (Bausteine und Tokens aus ld-admin-design)
+.lo-info-card {
+    margin-bottom: 16px;
+
+    &__reopen {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+        border: 0;
+        background: none;
+        color: var(--color-text-secondary-default);
+        cursor: pointer;
+    }
+}
+
+.lo-num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.lo-order-list__states {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.lo-order-detail {
+    &__facts {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 8px 24px;
+        margin: 0;
+
+        dt {
+            color: var(--color-text-secondary-default);
+        }
+
+        dd {
+            margin: 0;
+        }
+    }
+
+    &__positions {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--color-border-secondary-default);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th.lo-num,
+        td.lo-num {
+            text-align: right;
+        }
+    }
+
+    &__action {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    &__note {
+        display: grid;
+        gap: 8px;
+        justify-items: start;
+        margin-bottom: 24px;
+
+        .mt-field {
+            width: 100%;
+        }
+    }
+
+    &__events {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: 12px 0;
+            border-top: 1px solid var(--color-border-secondary-default);
+        }
+    }
+
+    &__message {
+        margin-top: 4px;
+        white-space: pre-line;
+        font-style: italic;
+    }
+}

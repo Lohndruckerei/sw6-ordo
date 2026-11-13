@@ -2,7 +2,7 @@
     "name": "lohndruckerei/ld-ordo",
     "description": "Ordo – Auftragsmanagement und Leitstand: Auftragsannahme, Terminbestätigung, Lieferantenzuordnung, Zahlung, Rechnung, Kommunikation und Archiv. (in Entwicklung)",
     "type": "shopware-platform-plugin",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "license": "proprietary",
     "authors": [
         {

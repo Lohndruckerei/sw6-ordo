@@ -1,4 +1,4 @@
-import{T as r}from"./ld-ordo-BNiMn4b1.js";const o={template:`
+import{T as r}from"./ld-ordo-DCdGyUzQ.js";const o={template:`
 <lo-chip
     :label="label"
     :color="config.color"

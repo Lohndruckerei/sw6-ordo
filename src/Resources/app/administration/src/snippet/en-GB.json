@@ -2,16 +2,96 @@
     "ld-ordo": {
         "general": {
             "mainMenuItem": "Ordo",
-            "description": "Order workflow and control centre"
+            "description": "Order workflow and control centre",
+            "showExplanation": "Show explanation"
         },
-        "overview": {
-            "infoTitle": "Ordo is in development",
-            "infoText": "This will become the control centre for all orders: intake, artwork check, suppliers, in-house production, shipping, payment and invoicing. See docs/KONZEPT.md in the plugin for the roadmap."
+        "list": {
+            "title": "Orders",
+            "placeholderSearch": "Search orders …",
+            "open": "Open order file",
+            "columnNumber": "Order number",
+            "columnDate": "Order date",
+            "columnCustomer": "Customer",
+            "columnPositions": "Items",
+            "columnAmount": "Net",
+            "emptyTitle": "No orders in this view",
+            "emptySubline": "New orders appear here automatically. Older orders are added by the command “bin/console ordo:order:sync”.",
+            "info": {
+                "title": "Control centre: all orders at a glance",
+                "text": "Every order automatically gets an order file; every item has its own status. “Needs action” shows orders waiting for the customer or on hold – e.g. missing artwork or open prepayment. Click the order number to open the file."
+            },
+            "filter": {
+                "action": "Needs action",
+                "actionHelp": "At least one item is waiting for the customer (artwork, approval, payment, question) or is on hold.",
+                "open": "Open",
+                "openHelp": "At least one item has not been shipped or cancelled yet.",
+                "finished": "Finished",
+                "finishedHelp": "All items are shipped, delivered or cancelled.",
+                "all": "All",
+                "allHelp": "All orders without filter."
+            }
+        },
+        "detail": {
+            "title": "Order {number}",
+            "openOrder": "Open order in Shopware",
+            "summary": "Overview",
+            "positions": "Items",
+            "columnPosition": "Item",
+            "columnQuantity": "Quantity",
+            "columnState": "Status",
+            "changeState": "Change status",
+            "noTransitions": "No change possible in this status.",
+            "protocol": "Log",
+            "automatic": "Automatic",
+            "noteLabel": "Note",
+            "noteHelp": "Internal note on the order file, visible to all staff, never to the customer. Example: “Customer will call back tomorrow about the colour”.",
+            "notePlaceholder": "e.g. customer wants delivery from 15 Dec",
+            "noteSave": "Save note",
+            "confirmText": "“{position}” changes to “{state}”.",
+            "reasonLabel": "Reason (optional)",
+            "reasonRequired": "Reason",
+            "reasonHelp": "Stored in the log and helps colleagues understand the change. Example: “Customer sent a new file by email”.",
+            "reasonPlaceholder": "e.g. question about film colour open",
+            "errorTransition": "The status could not be changed. Please reload the page and try again.",
+            "errorNote": "The note could not be saved.",
+            "info": {
+                "title": "Order file",
+                "text": "Here you see every item with its status. Use “Change status” to move an item on, e.g. from “Artwork check” to “Released”. Only allowed steps are offered. Every change and note is logged with your name."
+            }
+        },
+        "actions": {
+            "request_info": "Ask customer",
+            "request_artwork": "Request artwork",
+            "check_artwork": "To artwork check",
+            "reject_artwork": "Artwork rejected",
+            "request_approval": "Request approval",
+            "request_payment": "Await payment",
+            "release": "Release",
+            "order_supplier": "Ordered from supplier",
+            "start_production": "Send to production",
+            "ready": "Ready to ship",
+            "ship": "Shipped",
+            "deliver": "Delivered",
+            "hold": "Put on hold",
+            "cancel": "Cancel"
+        },
+        "events": {
+            "created": "Order file created ({count} items)",
+            "positions_added": "{count} items added",
+            "state_changed": "{position}: {from} → {to}",
+            "note": "Note"
+        }
+    },
+    "global": {
+        "entities": {
+            "ld_ordo_order": "Ordo order file"
         }
     },
     "sw-privileges": {
         "permissions": {
-            "ld_ordo": { "label": "Ordo (order workflow)" }
+            "ld_ordo": {
+                "label": "Ordo (order workflow)"
+            }
         }
     }
 }

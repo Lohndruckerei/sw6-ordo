@@ -2,16 +2,96 @@
     "ld-ordo": {
         "general": {
             "mainMenuItem": "Ordo",
-            "description": "Auftragsworkflow und Leitstand"
+            "description": "Auftragsworkflow und Leitstand",
+            "showExplanation": "Erklärung anzeigen"
         },
-        "overview": {
-            "infoTitle": "Ordo ist in Entwicklung",
-            "infoText": "Hier entsteht der Leitstand für alle Aufträge: Annahme, Datenprüfung, Lieferanten, interne Produktion, Versand, Zahlung und Rechnung. Den Fahrplan finden Sie in docs/KONZEPT.md des Plugins."
+        "list": {
+            "title": "Aufträge",
+            "placeholderSearch": "Aufträge durchsuchen …",
+            "open": "Auftragsakte öffnen",
+            "columnNumber": "Bestellnummer",
+            "columnDate": "Bestelldatum",
+            "columnCustomer": "Kunde",
+            "columnPositions": "Positionen",
+            "columnAmount": "Netto",
+            "emptyTitle": "Keine Aufträge in dieser Ansicht",
+            "emptySubline": "Neue Bestellungen erscheinen hier automatisch. Ältere Bestellungen übernimmt der Befehl „bin/console ordo:order:sync“.",
+            "info": {
+                "title": "Leitstand: alle Aufträge auf einen Blick",
+                "text": "Jede Bestellung bekommt automatisch eine Auftragsakte; jede Position hat ihren eigenen Status. „Braucht Aktion“ zeigt Aufträge, die auf den Kunden warten oder angehalten sind – z. B. fehlende Druckdaten oder offene Vorkasse. Klicken Sie auf die Bestellnummer, um die Akte zu öffnen."
+            },
+            "filter": {
+                "action": "Braucht Aktion",
+                "actionHelp": "Mindestens eine Position wartet auf den Kunden (Daten, Freigabe, Zahlung, Rückfrage) oder ist angehalten.",
+                "open": "Offen",
+                "openHelp": "Mindestens eine Position ist noch nicht versendet oder storniert.",
+                "finished": "Abgeschlossen",
+                "finishedHelp": "Alle Positionen sind versendet, zugestellt oder storniert.",
+                "all": "Alle",
+                "allHelp": "Alle Aufträge ohne Filter."
+            }
+        },
+        "detail": {
+            "title": "Auftrag {number}",
+            "openOrder": "Bestellung in Shopware öffnen",
+            "summary": "Überblick",
+            "positions": "Positionen",
+            "columnPosition": "Position",
+            "columnQuantity": "Menge",
+            "columnState": "Status",
+            "changeState": "Status ändern",
+            "noTransitions": "In diesem Status ist kein Wechsel möglich.",
+            "protocol": "Protokoll",
+            "automatic": "Automatik",
+            "noteLabel": "Notiz",
+            "noteHelp": "Interne Notiz zur Auftragsakte, sichtbar für alle Mitarbeiter, nie für den Kunden. Beispiel: „Kunde ruft morgen wegen Farbe zurück“.",
+            "notePlaceholder": "z. B. Kunde wünscht Lieferung erst ab 15.12.",
+            "noteSave": "Notiz speichern",
+            "confirmText": "„{position}“ wechselt zu „{state}“.",
+            "reasonLabel": "Grund (optional)",
+            "reasonRequired": "Grund",
+            "reasonHelp": "Wird im Protokoll gespeichert und hilft Kollegen, den Wechsel nachzuvollziehen. Beispiel: „Kunde hat neue Datei per Mail geschickt“.",
+            "reasonPlaceholder": "z. B. Rückfrage zur Folienfarbe offen",
+            "errorTransition": "Der Status konnte nicht geändert werden. Bitte Seite neu laden und erneut versuchen.",
+            "errorNote": "Die Notiz konnte nicht gespeichert werden.",
+            "info": {
+                "title": "Auftragsakte",
+                "text": "Hier sehen Sie jede Position mit ihrem Status. Über „Status ändern“ schieben Sie eine Position weiter, z. B. von „In Datenprüfung“ zu „Freigegeben“. Nur erlaubte Schritte werden angeboten. Jeder Wechsel und jede Notiz landen mit Ihrem Namen im Protokoll."
+            }
+        },
+        "actions": {
+            "request_info": "Rückfrage an Kunden",
+            "request_artwork": "Druckdaten anfordern",
+            "check_artwork": "Zur Datenprüfung",
+            "reject_artwork": "Daten fehlerhaft",
+            "request_approval": "Freigabe anfordern",
+            "request_payment": "Auf Zahlung warten",
+            "release": "Freigeben",
+            "order_supplier": "Beim Lieferanten bestellt",
+            "start_production": "In Produktion geben",
+            "ready": "Versandbereit",
+            "ship": "Versendet",
+            "deliver": "Zugestellt",
+            "hold": "Anhalten",
+            "cancel": "Stornieren"
+        },
+        "events": {
+            "created": "Auftragsakte angelegt ({count} Positionen)",
+            "positions_added": "{count} Positionen ergänzt",
+            "state_changed": "{position}: {from} → {to}",
+            "note": "Notiz"
+        }
+    },
+    "global": {
+        "entities": {
+            "ld_ordo_order": "Ordo-Auftragsakte"
         }
     },
     "sw-privileges": {
         "permissions": {
-            "ld_ordo": { "label": "Ordo (Auftragsworkflow)" }
+            "ld_ordo": {
+                "label": "Ordo (Auftragsworkflow)"
+            }
         }
     }
 }

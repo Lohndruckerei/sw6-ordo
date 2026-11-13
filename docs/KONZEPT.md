@@ -206,7 +206,7 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 |---|---|
 | 1 | Gerüst, Dokumentation, Docker, Design-Anbindung ✔ |
 | 2 | SOM-Spiegel aufsetzen und heutigen Ablauf auswerten → Konzept schärfen ✔ (docs/SOM-AUSWERTUNG.md) |
-| 3 | Auftragsakte + Positionsstatus (State Machine), Protokoll, Auftragsliste im Leitstand |
+| 3 | Auftragsakte + Positionsstatus (State Machine), Protokoll, Auftragsliste im Leitstand ✔ (v0.2.0) |
 | 4 | Vollbild-Arbeitsplatz, Rollen und Rechte |
 | 5 | Lieferantenzuordnung + gespeicherte Lieferantenbestellungen (LieferLotse), Umleiten/Storno |
 | 6 | Proba Stufe 1 (Upload, Prüfung, Freigabe) und Freigabe-Tor |

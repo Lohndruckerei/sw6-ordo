@@ -1,6 +1,18 @@
 # Ordo – Auftragsworkflow und Leitstand für Shopware 6
 
-> In Entwicklung – Gerüst und Konzept, noch nicht nutzbar.
+> In Entwicklung. Stand 0.2.0: Auftragsakte, Positionsstatus mit Protokoll, Leitstand-Liste.
+
+## Was schon geht (0.2.0)
+- **Auftragsakte:** Jede neue Bestellung bekommt automatisch eine Akte (`ld_ordo_order`); jede Produkt-Position
+  bekommt einen eigenen Status (`ld_ordo_position`, Status-Maschine `ld_ordo_position.state`, 15 Status, siehe
+  `src/Service/PositionState.php` und KONZEPT 4.2). Ältere Bestellungen: `bin/console ordo:order:sync [--limit=500]`.
+- **Statuswechsel** nur über `POST /api/_action/ld-ordo/position/{id}/transition/{action}` (Body `reason`, bei `hold`
+  Pflicht); erlaubte Schritte: `GET /api/_action/ld-ordo/position/{id}/transitions`. Jeder Wechsel landet mit
+  Benutzer und Grund im Protokoll (`ld_ordo_event`); Notizen: `POST /api/_action/ld-ordo/order/{id}/note`.
+- **Administration:** Hauptmenü „Ordo“ → Liste mit Filtern „Braucht Aktion / Offen / Abgeschlossen / Alle“ und
+  Auftragsakte mit Positionen, „Status ändern“, Notizen und Protokoll.
+- **Rechte:** `ld_ordo.viewer` (lesen), `ld_ordo.editor` (Status ändern, Notizen).
+- **Deinstallation** ohne „Daten behalten“ entfernt Tabellen und Status-Maschine; Bestellungen bleiben unverändert.
 
 Shopware-6.7-Plugin der Lohndruckerei. Jeder Kundenauftrag läuft durch Ordo: Auftragsannahme,
 Terminbestätigung, Zuordnung an Lieferanten oder interne Produktion, Druckdatenprüfung, Zahlung,
