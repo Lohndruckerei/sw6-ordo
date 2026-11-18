@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lohndruckerei\Ordo\Core\Ordo\Order;
 
+use Lohndruckerei\Ordo\Core\Ordo\SupplierOrder\OrdoSupplierOrderDefinition;
 use Lohndruckerei\Ordo\Core\Ordo\Event\OrdoEventDefinition;
 use Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionDefinition;
 use Shopware\Core\Checkout\Order\OrderDefinition;
@@ -51,6 +52,7 @@ class OrdoOrderDefinition extends EntityDefinition
             new ManyToOneAssociationField('order', 'order_id', OrderDefinition::class, 'id', false),
             (new OneToManyAssociationField('positions', OrdoPositionDefinition::class, 'ordo_order_id'))->addFlags(new CascadeDelete()),
             (new OneToManyAssociationField('events', OrdoEventDefinition::class, 'ordo_order_id'))->addFlags(new CascadeDelete()),
+            (new OneToManyAssociationField('supplierOrders', OrdoSupplierOrderDefinition::class, 'ordo_order_id'))->addFlags(new CascadeDelete()),
         ]);
     }
 }

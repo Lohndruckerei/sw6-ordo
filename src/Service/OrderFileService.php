@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Lohndruckerei\Ordo\Service;
 
 use Lohndruckerei\Ordo\Core\Ordo\Order\OrdoOrderCollection;
+use Lohndruckerei\Ordo\Event\PositionStateChangedEvent;
 use Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionCollection;
 use Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionEntity;
 use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Order\OrderCollection;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Shopware\Core\Framework\Api\Exception\MissingPrivilegeException;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -19,6 +21,7 @@ use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\StateMachine\StateMachineRegistry;
 use Shopware\Core\System\StateMachine\Transition;
 use Shopware\Core\System\User\UserCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Legt Auftragsakten an, führt Statuswechsel der Positionen aus und schreibt das Protokoll.
@@ -43,6 +46,8 @@ class OrderFileService
         private readonly EntityRepository $eventRepository,
         private readonly EntityRepository $userRepository,
         private readonly StateMachineRegistry $stateMachineRegistry,
+        private readonly AssignmentService $assignmentService,
+        private readonly EventDispatcherInterface $dispatcher,
     ) {
     }
 
@@ -83,6 +88,8 @@ class OrderFileService
         }
 
         if ($existing !== null && $positions === []) {
+            $this->assign($ordoOrderId, $context);
+
             return $ordoOrderId;
         }
 
@@ -105,7 +112,62 @@ class OrderFileService
             ]], $context);
         });
 
+        $this->assign($ordoOrderId, $context);
+
         return $ordoOrderId;
+    }
+
+    /**
+     * Automatische Zuteilung offener Positionen (E18) mit Protokoll.
+     */
+    public function assign(string $ordoOrderId, Context $context): void
+    {
+        foreach ($this->assignmentService->assignOpen($ordoOrderId, $context) as $assigned) {
+            $this->log($ordoOrderId, 'assigned', null, [
+                'target' => AssignmentService::TARGET_SUPPLIER,
+                'supplierId' => $assigned['supplierId'],
+                'supplier' => $assigned['supplier'],
+                'source' => $assigned['source'],
+            ], $context, $assigned['positionId']);
+        }
+    }
+
+    /**
+     * Zuteilung von Hand ändern (Ziel und Lieferant), nur bis zur Bestellung beim Lieferanten. Protokolliert alt und neu.
+     */
+    public function setAssignment(string $positionId, ?string $target, ?string $supplierId, ?string $reason, Context $context): void
+    {
+        $position = $this->position($positionId, $context);
+        if (!\in_array($position->getStateMachineState()?->getTechnicalName(), AssignmentService::CHANGEABLE, true)) {
+            throw new \DomainException('Die Position ist bereits bestellt oder in Arbeit. Bitte zuerst über „Weiterleiten“ zurückholen.');
+        }
+        if ($target !== null && !\in_array($target, AssignmentService::TARGETS, true)) {
+            throw new \DomainException('Unbekanntes Ziel.');
+        }
+        if ($target !== AssignmentService::TARGET_SUPPLIER) {
+            $supplierId = null;
+        } elseif ($supplierId === null || !$this->assignmentService->supplierExists($supplierId)) {
+            throw new \DomainException('Bitte einen Lieferanten auswählen, z. B. den Vorschlag aus Mensura.');
+        }
+
+        $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($positionId, $target, $supplierId): void {
+            $this->positionRepository->update([[
+                'id' => $positionId,
+                'target' => $target,
+                'supplierId' => $supplierId,
+                'assignmentSource' => AssignmentService::SOURCE_MANUAL,
+            ]], $context);
+        });
+
+        $names = $this->assignmentService->suppliers(array_values(array_filter([$position->getSupplierId(), $supplierId])));
+        $this->log($position->getOrdoOrderId(), 'assigned', $reason !== null && trim($reason) !== '' ? trim($reason) : null, [
+            'target' => $target,
+            'supplierId' => $supplierId,
+            'supplier' => $supplierId !== null ? ($names[$supplierId]['name'] ?? null) : null,
+            'previousTarget' => $position->getTarget(),
+            'previousSupplier' => $position->getSupplierId() !== null ? ($names[$position->getSupplierId()]['name'] ?? null) : null,
+            'source' => AssignmentService::SOURCE_MANUAL,
+        ], $context, $positionId);
     }
 
     /**
@@ -115,6 +177,10 @@ class OrderFileService
     {
         $before = $this->position($positionId, $context);
         $from = $before->getStateMachineState()?->getTechnicalName();
+        if (!OrdoAcl::mayHandle($from, $context)) {
+            // Arbeitsbereiche: Produktion, Datenprüfung und Versand handeln nur in ihrer eigenen Warteschlange
+            throw new MissingPrivilegeException([OrdoAcl::EDITOR]);
+        }
 
         $this->stateMachineRegistry->transition(
             new Transition(PositionState::ENTITY, $positionId, $action, PositionState::FIELD),
@@ -138,6 +204,8 @@ class OrderFileService
             'to' => $to,
         ], $context, $positionId);
 
+        $this->dispatcher->dispatch(new PositionStateChangedEvent($positionId, $after->getOrdoOrderId(), $from, $to, $context));
+
         return $after;
     }
 
@@ -147,6 +215,9 @@ class OrderFileService
     public function availableTransitions(string $positionId, Context $context): array
     {
         $result = [];
+        if (!OrdoAcl::mayHandle($this->position($positionId, $context)->getStateMachineState()?->getTechnicalName(), $context)) {
+            return $result;
+        }
         foreach ($this->stateMachineRegistry->getAvailableTransitions(PositionState::ENTITY, $positionId, PositionState::FIELD, $context) as $transition) {
             $result[] = [
                 'action' => $transition->getActionName(),
@@ -177,7 +248,7 @@ class OrderFileService
         });
     }
 
-    private function position(string $positionId, Context $context): OrdoPositionEntity
+    public function position(string $positionId, Context $context): OrdoPositionEntity
     {
         $criteria = (new Criteria([$positionId]))->addAssociation('stateMachineState');
         $position = $context->scope(Context::SYSTEM_SCOPE, fn (Context $c) => $this->positionRepository->search($criteria, $c)->first());
@@ -193,6 +264,11 @@ class OrderFileService
      *
      * @return array{id: ?string, name: ?string}
      */
+    public function userName(Context $context): ?string
+    {
+        return $this->user($context)['name'];
+    }
+
     private function user(Context $context): array
     {
         $source = $context->getSource();

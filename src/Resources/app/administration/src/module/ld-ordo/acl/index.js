@@ -31,8 +31,32 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
                 'ld_ordo_position:update',
                 'ld_ordo_event:create',
                 'state_machine_history:create',
+                // Lieferantenauswahl in der Akte (LieferLotse, falls installiert)
+                'ld_supplier:read',
             ],
             dependencies: ['ld_ordo.viewer'],
         },
+    },
+});
+
+/**
+ * Arbeitsbereiche und Sonderrechte (Fahrplan Schritt 4). Muss mit Service/OrdoAcl.php übereinstimmen.
+ * Chef und Kundenservice handeln in jedem Status (über ld_ordo.editor), Datenprüfung, Produktion und Versand
+ * nur in ihrer Warteschlange – serverseitig geprüft. ld_ordo.purchase zeigt EK/Marge nur zusammen mit ld_mensura.purchase.
+ */
+const WORK = ['ld_ordo_position:update', 'ld_ordo_event:create', 'state_machine_history:create'];
+
+Shopware.Service('privileges').addPrivilegeMappingEntry({
+    category: 'additional_permissions',
+    parent: null,
+    key: 'ld_ordo',
+    roles: {
+        chef: { privileges: [], dependencies: ['ld_ordo.viewer', 'ld_ordo.editor'] },
+        service: { privileges: [], dependencies: ['ld_ordo.viewer', 'ld_ordo.editor'] },
+        artwork: { privileges: WORK, dependencies: ['ld_ordo.viewer'] },
+        production: { privileges: WORK, dependencies: ['ld_ordo.viewer'] },
+        shipping: { privileges: WORK, dependencies: ['ld_ordo.viewer'] },
+        purchase: { privileges: [], dependencies: ['ld_ordo.viewer', 'ld_mensura.purchase'] },
+        admin: { privileges: [], dependencies: ['ld_ordo.viewer'] },
     },
 });

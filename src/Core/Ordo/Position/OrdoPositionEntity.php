@@ -21,6 +21,8 @@ class OrdoPositionEntity extends Entity
     protected ?string $target = null;
     protected ?string $supplierId = null;
     protected ?string $holdReason = null;
+    protected ?string $assignmentSource = null;
+    protected ?string $supplierOrderId = null;
     protected ?OrdoOrderEntity $ordoOrder = null;
     protected ?OrderLineItemEntity $orderLineItem = null;
     protected ?StateMachineStateEntity $stateMachineState = null;
@@ -37,6 +39,10 @@ class OrdoPositionEntity extends Entity
     public function setTarget(?string $target): void { $this->target = $target; }
     public function getSupplierId(): ?string { return $this->supplierId; }
     public function setSupplierId(?string $supplierId): void { $this->supplierId = $supplierId; }
+    public function getAssignmentSource(): ?string { return $this->assignmentSource; }
+    public function setAssignmentSource(?string $assignmentSource): void { $this->assignmentSource = $assignmentSource; }
+    public function getSupplierOrderId(): ?string { return $this->supplierOrderId; }
+    public function setSupplierOrderId(?string $supplierOrderId): void { $this->supplierOrderId = $supplierOrderId; }
     public function getHoldReason(): ?string { return $this->holdReason; }
     public function setHoldReason(?string $holdReason): void { $this->holdReason = $holdReason; }
     public function getOrdoOrder(): ?OrdoOrderEntity { return $this->ordoOrder; }

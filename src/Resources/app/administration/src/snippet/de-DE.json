@@ -79,7 +79,122 @@
             "created": "Auftragsakte angelegt ({count} Positionen)",
             "positions_added": "{count} Positionen ergänzt",
             "state_changed": "{position}: {from} → {to}",
-            "note": "Notiz"
+            "note": "Notiz",
+            "assigned": "„{position}“ zugeteilt: {target} ({source})",
+            "supplier_order_sent": "Lieferantenbestellung {number} an {supplier} gesendet",
+            "supplier_order_failed": "Lieferantenbestellung {number} an {supplier} fehlgeschlagen"
+        },
+        "transition": {
+            "forward": "Weiterleiten",
+            "forwardButton": "Weiterleiten",
+            "forwardText": "„{position}“ an eine andere Station geben – auch überspringen oder zurückschieben.",
+            "target": "Ziel-Station",
+            "targetHelp": "Status, in den die Position wechselt. Beispiel: „Versandbereit“, wenn die Weiterverarbeitung entfällt.",
+            "reasonPlaceholder": "z. B. Kaschierung entfällt, direkt in den Versand"
+        },
+        "workspace": {
+            "title": "Ordo-Arbeitsplatz",
+            "areasLabel": "Arbeitsbereiche",
+            "toAdministration": "Zur Administration",
+            "logout": "Abmelden",
+            "back": "Zurück zur Warteschlange",
+            "openWindow": "Arbeitsplatz öffnen",
+            "openWindowHelp": "Öffnet den Vollbild-Arbeitsplatz ohne Shopware-Menü in einem eigenen Fenster.",
+            "filterLabel": "Nach Status filtern",
+            "filterAll": "Alle",
+            "columnOrder": "Auftrag",
+            "columnActions": "Aktionen",
+            "openFile": "Akte",
+            "emptyTitle": "Nichts zu tun",
+            "emptyText": "In diesem Bereich wartet gerade keine Position. Neue Aufträge erscheinen hier automatisch.",
+            "noAreaTitle": "Kein Arbeitsbereich freigegeben",
+            "noAreaText": "Ihrer Rolle ist noch kein Ordo-Bereich zugeordnet. Bitte den Administrator, z. B. die Rolle „Ordo – Produktion“ zuzuweisen.",
+            "areas": {
+                "chef": {
+                    "title": "Leitstand",
+                    "tab": "Chef",
+                    "info": "Alle offenen Positionen aller Stationen. Die Zahlen oben zeigen, wo sich Arbeit staut – ein Klick filtert die Liste, z. B. auf „Warten auf Zahlung“."
+                },
+                "service": {
+                    "title": "Kundenservice",
+                    "tab": "Kundenservice",
+                    "info": "Neue Aufträge, Rückfragen, Zahlung und Freigegebenes. Über die Akte sehen Sie den ganzen Auftrag; „Weiterleiten“ schickt eine Position an jede Station, z. B. zurück in die Datenprüfung."
+                },
+                "artwork": {
+                    "title": "Datenprüfung",
+                    "tab": "Datenprüfung",
+                    "info": "Positionen, deren Druckdaten fehlen, geprüft werden oder auf Kundenfreigabe warten. „Freigeben“ schließt die Prüfung ab; fehlerhafte Daten über „Weiterleiten“ → „Daten fehlerhaft“ mit Grund."
+                },
+                "production": {
+                    "title": "Produktion",
+                    "tab": "Produktion",
+                    "info": "Freigegebene Positionen und laufende Arbeit, älteste Bestellung zuerst. „In Produktion geben“ startet, „Versandbereit“ schließt ab. Eine Station überspringen oder zurückgeben: „Weiterleiten“."
+                },
+                "shipping": {
+                    "title": "Versand",
+                    "tab": "Versand",
+                    "info": "Versandbereite Positionen. „Versendet“ schließt ab; Label und Lieferschein folgen mit dem Versandarbeitsplatz (Fahrplan Schritt 9)."
+                }
+            }
+        },
+        "assignment": {
+            "column": "Ziel",
+            "title": "Zuteilung ändern",
+            "text": "Wohin geht „{position}“? Die Änderung wird mit Grund protokolliert.",
+            "target": "Lieferant oder Produktion",
+            "targetHelp": "Vorschläge kommen aus Mensura (Kalkulation) und LieferLotse (Priorität). Beispiel: Comdatek für Alu-Verbundplatten.",
+            "otherSupplier": "Anderer Lieferant",
+            "otherSupplierHelp": "Jeder aktive Lieferant aus LieferLotse, auch ohne Zuordnung zum Produkt. Beispiel: Ausweichlieferant bei Lieferengpass.",
+            "other": "Anderer Lieferant …",
+            "internal": "Interne Produktion",
+            "suggestedMensura": "Vorschlag Mensura",
+            "priority": "Priorität {priority}",
+            "inactive": "inaktiv",
+            "reasonPlaceholder": "z. B. Comdatek hat Lieferengpass bis KW 49",
+            "save": "Zuteilung speichern",
+            "change": "Ändern",
+            "open": "Offen – bitte zuteilen",
+            "unknownSupplier": "Lieferant (nicht gefunden)",
+            "noCandidate": "kein Vorschlag vorhanden",
+            "purchase": "EK {value}",
+            "error": "Die Zuteilung konnte nicht gespeichert werden.",
+            "source": {
+                "mensura": "Vorschlag Mensura",
+                "lieferlotse": "LieferLotse-Priorität",
+                "manual": "von Hand"
+            }
+        },
+        "supplierOrders": {
+            "title": "Lieferantenbestellungen",
+            "unavailable": "LieferLotse ist nicht aktiv – Lieferantenbestellungen können nicht gebaut oder gesendet werden.",
+            "autoSendOn": "Automatisches Senden ist eingeschaltet: Sobald alle Positionen eines Lieferanten freigegeben sind, geht die Bestellung raus.",
+            "released": "{released} von {total} freigegeben",
+            "preview": "Vorschau",
+            "send": "An Lieferant senden",
+            "sendNow": "Jetzt senden",
+            "sendPartial": "Freigegebene vorab senden",
+            "notComplete": "Erst senden, wenn alle Positionen dieses Lieferanten freigegeben sind – oder „Freigegebene vorab senden“.",
+            "confirm": "Die Bestellung geht über die hinterlegte Schnittstelle an {supplier}. Danach stehen die Positionen auf „Beim Lieferanten bestellt“.",
+            "confirmPartial": "Teilbestellung: Nur die freigegebenen Positionen gehen jetzt an {supplier}; der Rest folgt als eigene Bestellung mit Zähler (z. B. 10006-COMDATEK-2).",
+            "nothingOpen": "Keine offenen Positionen für Lieferanten. Positionen erscheinen hier, sobald sie einem Lieferanten zugeteilt sind.",
+            "columnNumber": "Nummer",
+            "columnStatus": "Ergebnis",
+            "columnInterface": "Schnittstelle",
+            "columnDelivery": "Liefertermin",
+            "columnWhen": "Gesendet",
+            "positions": "{count} Position | {count} Positionen",
+            "partial": "Teilbestellung",
+            "noInterface": "keine aktive Schnittstelle – Senden schlägt fehl",
+            "address": "Lieferadresse",
+            "supplierNumber": "Lieferanten-Art.-Nr.",
+            "sent": "{number} gesendet: {message}",
+            "failed": "{number} fehlgeschlagen: {message}",
+            "error": "Die Lieferantenbestellung konnte nicht erstellt werden.",
+            "status": {
+                "sent": "Gesendet",
+                "failed": "Fehlgeschlagen",
+                "cancelled": "Storniert"
+            }
         }
     },
     "global": {
@@ -91,6 +206,18 @@
         "permissions": {
             "ld_ordo": {
                 "label": "Ordo (Auftragsworkflow)"
+            }
+        },
+        "additional_permissions": {
+            "ld_ordo": {
+                "label": "Ordo – Arbeitsplätze",
+                "chef": "Chef: alle Bereiche, Kennzahlen",
+                "service": "Kundenservice: alle Aufträge, jeder Status",
+                "artwork": "Datenprüfung (Warteschlange)",
+                "production": "Produktion (Warteschlange)",
+                "shipping": "Versand (Warteschlange)",
+                "purchase": "EK und Marge (setzt Mensura-Recht EK voraus)",
+                "admin": "Workflow-Einstellungen (folgt)"
             }
         }
     }

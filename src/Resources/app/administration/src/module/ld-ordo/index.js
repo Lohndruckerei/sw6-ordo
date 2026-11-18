@@ -1,10 +1,16 @@
 import './acl';
 import './ordo.scss';
+import { installWorkspaceGuard } from './workspace-guard';
 
 Shopware.Component.register('lo-info-card', () => import('./component/lo-info-card'));
 Shopware.Component.register('lo-position-state', () => import('./component/lo-position-state'));
 Shopware.Component.register('lo-order-list', () => import('./page/lo-order-list'));
 Shopware.Component.register('lo-order-detail', () => import('./page/lo-order-detail'));
+Shopware.Component.register('lo-order-file', () => import('./component/lo-order-file'));
+Shopware.Component.register('lo-supplier-orders', () => import('./component/lo-supplier-orders'));
+Shopware.Component.register('lo-assignment-modal', () => import('./component/lo-assignment-modal'));
+Shopware.Component.register('lo-transition-modal', () => import('./component/lo-transition-modal'));
+Shopware.Component.register('lo-workspace', () => import('./page/lo-workspace'));
 
 const COLOR = '#0B6E79';
 
@@ -35,6 +41,20 @@ Shopware.Module.register('ld-ordo', {
             props: { default: (route) => ({ ordoOrderId: route.params.id }) },
             meta: { parentPath: 'ld.ordo.list', privilege: 'ld_ordo.viewer' },
         },
+        workspace: {
+            component: 'lo-workspace',
+            path: '/ordo/:area?',
+            coreRoute: true,
+            props: { default: (route) => ({ area: route.params.area || null }) },
+            meta: { privilege: 'ld_ordo.viewer' },
+        },
+        workspaceOrder: {
+            component: 'lo-workspace',
+            path: '/ordo/:area/akte/:id',
+            coreRoute: true,
+            props: { default: (route) => ({ area: route.params.area, ordoOrderId: route.params.id }) },
+            meta: { privilege: 'ld_ordo.viewer' },
+        },
     },
 
     navigation: [
@@ -49,3 +69,5 @@ Shopware.Module.register('ld-ordo', {
         },
     ],
 });
+
+installWorkspaceGuard();

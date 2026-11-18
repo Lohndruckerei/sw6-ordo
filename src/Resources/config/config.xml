@@ -3,6 +3,20 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
     <card>
+        <title>Supplier orders</title>
+        <title lang="de-DE">Lieferantenbestellungen</title>
+
+        <input-field type="bool">
+            <name>autoSendSupplierOrders</name>
+            <label>Send supplier orders automatically</label>
+            <label lang="de-DE">Lieferantenbestellungen automatisch senden</label>
+            <helpText>Off (recommended): customer service sends with the button in the order file. On: as soon as all positions for a supplier are released, Ordo sends the supplier order via LieferLotse – e.g. right after the artwork release.</helpText>
+            <helpText lang="de-DE">Aus (empfohlen): Der Kundenservice sendet per Knopf in der Auftragsakte. An: Sobald alle Positionen eines Lieferanten freigegeben sind, sendet Ordo die Lieferantenbestellung über LieferLotse – z. B. direkt nach der Druckdaten-Freigabe.</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+    </card>
+
+    <card>
         <title>Administration</title>
         <title lang="de-DE">Administration</title>
 

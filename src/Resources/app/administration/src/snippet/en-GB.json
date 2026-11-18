@@ -79,7 +79,122 @@
             "created": "Order file created ({count} items)",
             "positions_added": "{count} items added",
             "state_changed": "{position}: {from} → {to}",
-            "note": "Note"
+            "note": "Note",
+            "assigned": "“{position}” assigned: {target} ({source})",
+            "supplier_order_sent": "Supplier order {number} sent to {supplier}",
+            "supplier_order_failed": "Supplier order {number} to {supplier} failed"
+        },
+        "transition": {
+            "forward": "Forward",
+            "forwardButton": "Forward",
+            "forwardText": "Move “{position}” to another station – you can also skip or go back.",
+            "target": "Target station",
+            "targetHelp": "State the position moves to. Example: “Ready to ship” if finishing is not needed.",
+            "reasonPlaceholder": "e.g. no lamination needed, straight to shipping"
+        },
+        "workspace": {
+            "title": "Ordo workspace",
+            "areasLabel": "Work areas",
+            "toAdministration": "To administration",
+            "logout": "Log out",
+            "back": "Back to queue",
+            "openWindow": "Open workspace",
+            "openWindowHelp": "Opens the full-screen workspace without the Shopware menu in its own window.",
+            "filterLabel": "Filter by state",
+            "filterAll": "All",
+            "columnOrder": "Order",
+            "columnActions": "Actions",
+            "openFile": "File",
+            "emptyTitle": "Nothing to do",
+            "emptyText": "No position is waiting in this area. New orders appear here automatically.",
+            "noAreaTitle": "No work area assigned",
+            "noAreaText": "Your role has no Ordo area yet. Ask the administrator to assign e.g. the role “Ordo – Produktion”.",
+            "areas": {
+                "chef": {
+                    "title": "Control centre",
+                    "tab": "Manager",
+                    "info": "All open positions of every station. The figures above show where work piles up – click one to filter, e.g. “Awaiting payment”."
+                },
+                "service": {
+                    "title": "Customer service",
+                    "tab": "Service",
+                    "info": "New orders, queries, payment and released items. The file shows the whole order; “Forward” sends a position to any station, e.g. back to artwork check."
+                },
+                "artwork": {
+                    "title": "Artwork check",
+                    "tab": "Artwork",
+                    "info": "Positions whose artwork is missing, being checked or awaiting customer approval. “Release” finishes the check; faulty files via “Forward” → “Artwork rejected” with a reason."
+                },
+                "production": {
+                    "title": "Production",
+                    "tab": "Production",
+                    "info": "Released positions and work in progress, oldest order first. “Start production” begins, “Ready to ship” finishes. To skip or return a station use “Forward”."
+                },
+                "shipping": {
+                    "title": "Shipping",
+                    "tab": "Shipping",
+                    "info": "Positions ready to ship. “Shipped” finishes; label and delivery note follow with the shipping workspace (roadmap step 9)."
+                }
+            }
+        },
+        "assignment": {
+            "column": "Target",
+            "title": "Change assignment",
+            "text": "Where does “{position}” go? The change is logged with the reason.",
+            "target": "Supplier or production",
+            "targetHelp": "Suggestions come from Mensura (calculation) and LieferLotse (priority). Example: Comdatek for aluminium composite panels.",
+            "otherSupplier": "Other supplier",
+            "otherSupplierHelp": "Any active LieferLotse supplier, even without product assignment. Example: fallback supplier during shortages.",
+            "other": "Other supplier …",
+            "internal": "In-house production",
+            "suggestedMensura": "Mensura suggestion",
+            "priority": "Priority {priority}",
+            "inactive": "inactive",
+            "reasonPlaceholder": "e.g. Comdatek has a shortage until week 49",
+            "save": "Save assignment",
+            "change": "Change",
+            "open": "Open – please assign",
+            "unknownSupplier": "Supplier (not found)",
+            "noCandidate": "no suggestion available",
+            "purchase": "Purchase {value}",
+            "error": "The assignment could not be saved.",
+            "source": {
+                "mensura": "Mensura suggestion",
+                "lieferlotse": "LieferLotse priority",
+                "manual": "manual"
+            }
+        },
+        "supplierOrders": {
+            "title": "Supplier orders",
+            "unavailable": "LieferLotse is not active – supplier orders cannot be built or sent.",
+            "autoSendOn": "Automatic sending is on: as soon as all positions of a supplier are released, the order is sent.",
+            "released": "{released} of {total} released",
+            "preview": "Preview",
+            "send": "Send to supplier",
+            "sendNow": "Send now",
+            "sendPartial": "Send released items now",
+            "notComplete": "Send once all positions of this supplier are released – or use “Send released items now”.",
+            "confirm": "The order is sent to {supplier} via the configured interface. The positions then show “Ordered from supplier”.",
+            "confirmPartial": "Partial order: only the released positions go to {supplier} now; the rest follows as a separate order with a counter (e.g. 10006-COMDATEK-2).",
+            "nothingOpen": "No open positions for suppliers. Positions appear here once assigned to a supplier.",
+            "columnNumber": "Number",
+            "columnStatus": "Result",
+            "columnInterface": "Interface",
+            "columnDelivery": "Delivery date",
+            "columnWhen": "Sent",
+            "positions": "{count} position | {count} positions",
+            "partial": "partial order",
+            "noInterface": "no active interface – sending will fail",
+            "address": "Shipping address",
+            "supplierNumber": "Supplier item no.",
+            "sent": "{number} sent: {message}",
+            "failed": "{number} failed: {message}",
+            "error": "The supplier order could not be created.",
+            "status": {
+                "sent": "Sent",
+                "failed": "Failed",
+                "cancelled": "Cancelled"
+            }
         }
     },
     "global": {
@@ -91,6 +206,18 @@
         "permissions": {
             "ld_ordo": {
                 "label": "Ordo (order workflow)"
+            }
+        },
+        "additional_permissions": {
+            "ld_ordo": {
+                "label": "Ordo – workspaces",
+                "chef": "Manager: all areas, key figures",
+                "service": "Customer service: all orders, any state",
+                "artwork": "Artwork check (queue)",
+                "production": "Production (queue)",
+                "shipping": "Shipping (queue)",
+                "purchase": "Purchase price and margin (requires Mensura purchase right)",
+                "admin": "Workflow settings (coming)"
             }
         }
     }

@@ -14,6 +14,9 @@ lauffähig. Änderungen hier und im jeweiligen Plugin-Dokument gemeinsam pflegen
 | EK-Schutz | Recht `ld_mensura.purchase`, `PurchaseFieldGuard` | Ordo zeigt EK/Marge nur mit diesem Recht; eigenes Recht `ld_ordo.purchase` setzt es voraus |
 | Reserviert | `ldMensura.artwork` | Verknüpfung zu Proba |
 
+**Umgesetzt (Schritt 5):** `AssignmentService` liest Lieferantenvorschlag und EK direkt aus `ld_mensura_order_line_item`
+(nur wenn die Tabelle existiert); EK nur mit `ld_ordo.purchase` + `ld_mensura.purchase`.
+
 Mensura löst derzeit **keine eigenen Events** aus; Neuberechnung bei Auftragsänderung über die
 Mensura-Store/Admin-API bzw. einen noch zu vereinbarenden Service (bei Mensura anfragen, nicht kopieren).
 
@@ -27,6 +30,7 @@ Mensura-Store/Admin-API bzw. einen noch zu vereinbarenden Service (bei Mensura a
 | `SupplierOrderRequestedEvent::veto()` | Ordo verhindert Senden, solange das Freigabe-Tor zu ist |
 | Flow `lieferlotse.supplier_order.sent/failed` | Status der Lieferantenbestellung |
 | `lieferlotse.supplier_order.shipping_confirmed` | **nur vorbereitet**, wird noch nicht ausgelöst – Auswertung der Versandmitteilungen kommt mit Vectura (Parser auf `SupplierFileReceivedEvent`) |
+| **Umgesetzt (Schritt 5)** | `AssignmentService` (Kandidaten über `SupplierResolver`), `SupplierOrderManager` (bauen, Zähler-Nummer bei Folgebestellung, senden, speichern), `SupplierOrderSubscriber` (Veto bei geschlossenem Tor, auch für Bestellungen aus LieferLotse selbst). Services per `on-invalid="null"`, ohne LieferLotse zeigt die Akte einen Hinweis. Ergebnis kommt direkt aus `send()` (TransportResult), nicht über die Flow-Events. |
 | Mail-Typ `ld_supplier_order_cancel` | Storno beim Umleiten; Ordo befüllt den Grund |
 | Zweck `artwork_out`, `ld_supplier_artwork` | freigegebene Druckdaten (aus Proba) senden |
 
