@@ -4,7 +4,7 @@
     "name": "constants"
   },
   "ld-admin-design/component/chip/index.js": {
-    "file": "assets/index-CakB2-FD.js",
+    "file": "assets/index-C8U_TFSd.js",
     "name": "index",
     "src": "ld-admin-design/component/chip/index.js",
     "isDynamicEntry": true,
@@ -13,7 +13,7 @@
     ]
   },
   "ld-admin-design/component/design-switch/index.js": {
-    "file": "assets/index-DTvNANQt.js",
+    "file": "assets/index-DDhCcciL.js",
     "name": "index",
     "src": "ld-admin-design/component/design-switch/index.js",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "ld-admin-design/component/status/index.js": {
-    "file": "assets/index-BOaa3KcO.js",
+    "file": "assets/index-DIyp7j3u.js",
     "name": "index",
     "src": "ld-admin-design/component/status/index.js",
     "isDynamicEntry": true,
@@ -37,7 +37,7 @@
     "isDynamicEntry": true
   },
   "ld-admin-design/component/transport-chip/index.js": {
-    "file": "assets/index-DOkUMJFW.js",
+    "file": "assets/index-Bn6IkY6-.js",
     "name": "index",
     "src": "ld-admin-design/component/transport-chip/index.js",
     "isDynamicEntry": true,
@@ -46,7 +46,7 @@
     ]
   },
   "main.js": {
-    "file": "assets/ld-ordo-BL0qOElZ.js",
+    "file": "assets/ld-ordo-Skt1jikp.js",
     "name": "ld-ordo",
     "src": "main.js",
     "isEntry": true,
@@ -131,7 +131,7 @@
     ]
   },
   "module/ld-ordo/page/lo-workspace/index.js": {
-    "file": "assets/index-_uObaHHw.js",
+    "file": "assets/index-BEIbdrYn.js",
     "name": "index",
     "src": "module/ld-ordo/page/lo-workspace/index.js",
     "isDynamicEntry": true,

@@ -1,4 +1,4 @@
-import{D as s}from"./ld-ordo-BL0qOElZ.js";const r={template:`
+import{D as s}from"./ld-ordo-Skt1jikp.js";const r={template:`
 <div class="lo-design-switch" role="group" :aria-label="$tc('lo-design.switchLabel')">
     <span class="lo-design-switch__label">{{ $tc('lo-design.switchLabel') }}</span>
     <button

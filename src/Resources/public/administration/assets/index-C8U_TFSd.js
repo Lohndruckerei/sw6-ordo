@@ -1,4 +1,4 @@
-import{C as l}from"./ld-ordo-BL0qOElZ.js";const i={template:`
+import{C as l}from"./ld-ordo-Skt1jikp.js";const i={template:`
 <span
     class="lo-chip"
     :style="{ '--lo-t': 'var(--lo-' + color + ')' }"

@@ -1,4 +1,4 @@
-import{d as c,C as d,A as s}from"./constants-JREQHd52.js";import{i as p}from"./ld-ordo-BL0qOElZ.js";const{Mixin:l}=Shopware,{Criteria:a}=Shopware.Data,u={template:`
+import{d as c,C as d,A as s}from"./constants-JREQHd52.js";import{i as p}from"./ld-ordo-Skt1jikp.js";const{Mixin:l}=Shopware,{Criteria:a}=Shopware.Data,u={template:`
 <div class="lo-workspace" :class="loDesignClass">
     <header class="lo-workspace__bar">
         <span class="lo-workspace__brand">
