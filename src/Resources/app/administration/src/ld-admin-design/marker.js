@@ -1,4 +1,4 @@
-/* GENERIERT aus ld-admin-design 1.1.0 (8fe3aa4) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
+/* GENERIERT aus ld-admin-design 1.1.0 (3d22274) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
 /**
  * Plugin-Markierung (Testmodus) – gemeinsam für alle Lohndruckerei-Plugins.
  *
@@ -11,11 +11,11 @@
  * Jedes Plugin bringt diese Datei mit; der erste geladene Stand richtet die Markierung ein
  * (window.ldAdminMarker), alle weiteren melden sich nur an.
  */
-import { MARKER_COLORS, MARKER_FALLBACK_COLOR } from './constants';
+import { MARKER_COLORS, MARKER_FALLBACK_COLOR, MARKER_ROUTES } from './constants';
 
 const STORAGE_KEY = 'ld-admin-marker';
 const ROOT_ATTR = 'data-ld-marker';
-const FIELD = '.mt-base-field, .sw-field, .mt-textarea, .mt-select, .sw-select, .mt-switch, .sw-text-editor, .mt-text-editor';
+const FIELD = '.mt-field, .mt-base-field,.sw-field, .mt-textarea, .mt-select, .sw-select, .mt-switch, .sw-text-editor, .mt-text-editor';
 const HELP = '.mt-help-text, .sw-help-text';
 const LINKS = '.sw-admin-menu a[href], .sw-tabs a[href], a.sw-tabs-item[href]';
 const SCAN_MS = 1000;
@@ -99,8 +99,10 @@ function createManager() {
         plugins.forEach((plugin) => {
             const selector = `[class^="${plugin.prefix}-"], [class*=" ${plugin.prefix}-"]`;
             document.querySelectorAll(selector).forEach((element) => {
+                // Im Hauptmenü tragen Shopware-Einträge die Menü-ID als Klasse (z. B. `ld-ordo`) –
+                // dort zählt nur der Link (unten), nicht die Klasse.
                 if (element.parentElement?.closest(selector)
-                    || element.closest('[data-ld-marker-legend]')
+                    || element.closest('[data-ld-marker-legend], .sw-admin-menu')
                     || element.classList.contains(`${plugin.prefix}-design-switch`)) {
                     return;
                 }
@@ -108,7 +110,8 @@ function createManager() {
             });
 
             document.querySelectorAll(LINKS).forEach((link) => {
-                if ((link.getAttribute('href') || '').toLowerCase().includes(plugin.route)) {
+                const href = (link.getAttribute('href') || '').toLowerCase();
+                if (plugin.routes.some((route) => href.includes(route))) {
                     mark(next, link, plugin);
                 }
             });
@@ -194,7 +197,7 @@ function createManager() {
 
         const html = `
 <div data-ld-marker-legend-title>${escape(text('title'))}</div>
-${plugins.map((plugin) => `
+${[...plugins].sort((a, b) => a.label.localeCompare(b.label)).map((plugin) => `
 <div data-ld-marker-legend-row${counts.has(plugin) ? '' : ' data-ld-marker-legend-idle'}>
     <span data-ld-marker-legend-dot style="background:${plugin.color}"></span>${escape(plugin.label)}
 </div>`).join('')}
@@ -284,7 +287,7 @@ export default function registerMarker() {
     window.ldAdminMarker.register({
         prefix: 'lo',
         label: 'LdOrdo'.replace(/^Ld/, ''),
-        route: 'ld-ordo'.replace(/^ld-/, '').toLowerCase(),
+        routes: MARKER_ROUTES.lo ?? ['ld-ordo'.replace('-', '/'), 'ld-ordo'],
         color: MARKER_COLORS.lo ?? MARKER_FALLBACK_COLOR,
     });
 }

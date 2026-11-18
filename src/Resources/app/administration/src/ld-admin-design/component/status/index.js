@@ -1,4 +1,4 @@
-/* GENERIERT aus ld-admin-design 1.1.0 (8fe3aa4) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
+/* GENERIERT aus ld-admin-design 1.1.0 (3d22274) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
 import { STATES, STATUS_ICONS } from '../../constants';
 
 /**

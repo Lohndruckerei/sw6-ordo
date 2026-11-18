@@ -1,4 +1,4 @@
-import{S as s,a}from"./ld-ordo-BbjEkFMf.js";const n={template:`
+import{S as s,a}from"./ld-ordo-BL0qOElZ.js";const n={template:`
 <span
     class="lo-status"
     :class="'lo-status--' + state"

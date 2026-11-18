@@ -1,4 +1,4 @@
-/* GENERIERT aus ld-admin-design 1.1.0 (8fe3aa4) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
+/* GENERIERT aus ld-admin-design 1.1.0 (3d22274) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
 export const DESIGNS = ['a', 'b', 'c'];
 export const DEFAULT_DESIGN = 'b';
 
@@ -27,6 +27,14 @@ export const MARKER_COLORS = {
     lu: '#2b2b33', // Opus
 };
 export const MARKER_FALLBACK_COLOR = '#0b6e79';
+
+/**
+ * Link-Bestandteile, an denen Menüpunkte und Reiter eines Plugins erkannt werden.
+ * Standard: Modulname aus dem Schlüssel (`ld-mensura` → `ld/mensura`, `ld-mensura`).
+ */
+export const MARKER_ROUTES = {
+    ld: ['ld/supplier', 'ld-supplier', 'ld-lieferlotse'],
+};
 
 /**
  * Übertragungswege: feste Farbe und festes Icon in allen Plugins.
