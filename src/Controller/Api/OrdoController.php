@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Lohndruckerei\Ordo\Controller\Api;
 
+use Lohndruckerei\Ordo\Service\AssignmentService;
 use Lohndruckerei\Ordo\Service\OrderFileService;
+use Lohndruckerei\Ordo\Service\OrdoAcl;
 use Lohndruckerei\Ordo\Service\PositionState;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -24,8 +26,58 @@ class OrdoController extends AbstractController
 {
     private const MAX_REASON = 500;
 
-    public function __construct(private readonly OrderFileService $orderFileService)
+    public function __construct(
+        private readonly OrderFileService $orderFileService,
+        private readonly AssignmentService $assignmentService,
+    ) {
+    }
+
+    #[Route(
+        path: '/api/_action/ld-ordo/order/{ordoOrderId}/supplier-candidates',
+        name: 'api.action.ld-ordo.order.supplier-candidates',
+        defaults: ['_acl' => ['ld_ordo_position:read']],
+        methods: ['GET'],
+    )]
+    public function supplierCandidates(string $ordoOrderId, Context $context): Response
     {
+        if (!Uuid::isValid($ordoOrderId)) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+        $purchase = OrdoAcl::canSeePurchase($context);
+
+        return new JsonResponse([
+            'purchase' => $purchase,
+            'positions' => $this->assignmentService->candidates($ordoOrderId, $purchase, $context),
+        ]);
+    }
+
+    #[Route(
+        path: '/api/_action/ld-ordo/position/{positionId}/assign',
+        name: 'api.action.ld-ordo.position.assign',
+        defaults: ['_acl' => ['ld_ordo.editor']],
+        methods: ['POST'],
+    )]
+    public function assign(string $positionId, Request $request, Context $context): Response
+    {
+        if (!Uuid::isValid($positionId)) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+        $target = $request->request->get('target');
+        $supplierId = $request->request->get('supplierId');
+        $reason = $request->request->get('reason');
+        try {
+            $this->orderFileService->setAssignment(
+                $positionId,
+                \is_string($target) && $target !== '' ? $target : null,
+                \is_string($supplierId) && Uuid::isValid($supplierId) ? $supplierId : null,
+                \is_string($reason) ? mb_substr($reason, 0, self::MAX_REASON) : null,
+                $context,
+            );
+        } catch (\DomainException $e) {
+            return $this->error($e->getMessage());
+        }
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
     #[Route(

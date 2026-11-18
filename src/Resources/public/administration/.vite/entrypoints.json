@@ -3,24 +3,25 @@
   "entryPoints": {
     "ld-ordo": {
       "css": [
-        "/bundles/ldordo/administration/assets/ld-ordo-DkEKILaG.css"
+        "/bundles/ldordo/administration/assets/ld-ordo-CUQQ0aLf.css"
       ],
       "dynamic": [
-        "/bundles/ldordo/administration/assets/index-D2Rffoos.js",
-        "/bundles/ldordo/administration/assets/index-DD_e73pu.js",
-        "/bundles/ldordo/administration/assets/index-D1L5zLwy.js",
-        "/bundles/ldordo/administration/assets/index-D8pcjNW1.js",
+        "/bundles/ldordo/administration/assets/index-BNK01fvM.js",
+        "/bundles/ldordo/administration/assets/index-Bb1Jzau1.js",
+        "/bundles/ldordo/administration/assets/index-DkdJ6tUy.js",
+        "/bundles/ldordo/administration/assets/index-CU7CRaQ8.js",
         "/bundles/ldordo/administration/assets/index-D5_iHOF_.js",
         "/bundles/ldordo/administration/assets/index-DIsnrRUd.js",
         "/bundles/ldordo/administration/assets/index-CZTIPObo.js",
         "/bundles/ldordo/administration/assets/index-Ba7GvXnA.js",
         "/bundles/ldordo/administration/assets/index-CyEbmHDA.js",
-        "/bundles/ldordo/administration/assets/index-n3G7K5tl.js",
+        "/bundles/ldordo/administration/assets/index-Cb0uSutX.js",
+        "/bundles/ldordo/administration/assets/index-GKgoyBQP.js",
         "/bundles/ldordo/administration/assets/index-9StxiuyF.js",
-        "/bundles/ldordo/administration/assets/index-CHWJyfVy.js"
+        "/bundles/ldordo/administration/assets/index-BLzhi-8Z.js"
       ],
       "js": [
-        "/bundles/ldordo/administration/assets/ld-ordo-BibNSJek.js"
+        "/bundles/ldordo/administration/assets/ld-ordo-BkMzg_ap.js"
       ],
       "legacy": false,
       "preload": []

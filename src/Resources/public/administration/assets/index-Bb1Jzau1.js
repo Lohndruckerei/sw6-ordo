@@ -1,4 +1,4 @@
-import{S as s,a}from"./ld-ordo-BibNSJek.js";const n={template:`
+import{S as s,a}from"./ld-ordo-BkMzg_ap.js";const n={template:`
 <span
     class="lo-status"
     :class="'lo-status--' + state"

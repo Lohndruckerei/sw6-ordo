@@ -18,7 +18,7 @@ class LdOrdo extends Plugin
     /**
      * Tabellen des Plugins, abhängige zuerst. Mit jeder neuen Migration ergänzen.
      */
-    public const TABLES = ['ld_ordo_event', 'ld_ordo_position', 'ld_ordo_order'];
+    public const TABLES = ['ld_ordo_event', 'ld_ordo_position', 'ld_ordo_supplier_order', 'ld_ordo_order'];
 
     public const STATE_MACHINE = 'ld_ordo_position.state';
 

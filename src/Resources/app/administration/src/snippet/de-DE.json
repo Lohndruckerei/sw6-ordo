@@ -79,7 +79,8 @@
             "created": "Auftragsakte angelegt ({count} Positionen)",
             "positions_added": "{count} Positionen ergänzt",
             "state_changed": "{position}: {from} → {to}",
-            "note": "Notiz"
+            "note": "Notiz",
+            "assigned": "„{position}“ zugeteilt: {target} ({source})"
         },
         "transition": {
             "forward": "Weiterleiten",
@@ -132,6 +133,33 @@
                     "tab": "Versand",
                     "info": "Versandbereite Positionen. „Versendet“ schließt ab; Label und Lieferschein folgen mit dem Versandarbeitsplatz (Fahrplan Schritt 9)."
                 }
+            }
+        },
+        "assignment": {
+            "column": "Ziel",
+            "title": "Zuteilung ändern",
+            "text": "Wohin geht „{position}“? Die Änderung wird mit Grund protokolliert.",
+            "target": "Lieferant oder Produktion",
+            "targetHelp": "Vorschläge kommen aus Mensura (Kalkulation) und LieferLotse (Priorität). Beispiel: Comdatek für Alu-Verbundplatten.",
+            "otherSupplier": "Anderer Lieferant",
+            "otherSupplierHelp": "Jeder aktive Lieferant aus LieferLotse, auch ohne Zuordnung zum Produkt. Beispiel: Ausweichlieferant bei Lieferengpass.",
+            "other": "Anderer Lieferant …",
+            "internal": "Interne Produktion",
+            "suggestedMensura": "Vorschlag Mensura",
+            "priority": "Priorität {priority}",
+            "inactive": "inaktiv",
+            "reasonPlaceholder": "z. B. Comdatek hat Lieferengpass bis KW 49",
+            "save": "Zuteilung speichern",
+            "change": "Ändern",
+            "open": "Offen – bitte zuteilen",
+            "unknownSupplier": "Lieferant (nicht gefunden)",
+            "noCandidate": "kein Vorschlag vorhanden",
+            "purchase": "EK {value}",
+            "error": "Die Zuteilung konnte nicht gespeichert werden.",
+            "source": {
+                "mensura": "Vorschlag Mensura",
+                "lieferlotse": "LieferLotse-Priorität",
+                "manual": "von Hand"
             }
         }
     },

@@ -236,6 +236,13 @@ export default {
         criteria(states) {
             const criteria = new Criteria(this.page, this.limit);
             criteria.addFilter(Criteria.equalsAny('stateMachineState.technicalName', states));
+            if (this.activeArea === 'production') {
+                // Produktion: freigegebene Positionen nur, wenn sie intern gefertigt werden (Zuteilung, KONZEPT E18)
+                criteria.addFilter(Criteria.multi('OR', [
+                    Criteria.not('AND', [Criteria.equals('stateMachineState.technicalName', 'released')]),
+                    Criteria.equals('target', 'internal'),
+                ]));
+            }
             return criteria;
         },
 

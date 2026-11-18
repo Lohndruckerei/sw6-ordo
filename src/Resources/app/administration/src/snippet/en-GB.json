@@ -79,7 +79,8 @@
             "created": "Order file created ({count} items)",
             "positions_added": "{count} items added",
             "state_changed": "{position}: {from} → {to}",
-            "note": "Note"
+            "note": "Note",
+            "assigned": "“{position}” assigned: {target} ({source})"
         },
         "transition": {
             "forward": "Forward",
@@ -132,6 +133,33 @@
                     "tab": "Shipping",
                     "info": "Positions ready to ship. “Shipped” finishes; label and delivery note follow with the shipping workspace (roadmap step 9)."
                 }
+            }
+        },
+        "assignment": {
+            "column": "Target",
+            "title": "Change assignment",
+            "text": "Where does “{position}” go? The change is logged with the reason.",
+            "target": "Supplier or production",
+            "targetHelp": "Suggestions come from Mensura (calculation) and LieferLotse (priority). Example: Comdatek for aluminium composite panels.",
+            "otherSupplier": "Other supplier",
+            "otherSupplierHelp": "Any active LieferLotse supplier, even without product assignment. Example: fallback supplier during shortages.",
+            "other": "Other supplier …",
+            "internal": "In-house production",
+            "suggestedMensura": "Mensura suggestion",
+            "priority": "Priority {priority}",
+            "inactive": "inactive",
+            "reasonPlaceholder": "e.g. Comdatek has a shortage until week 49",
+            "save": "Save assignment",
+            "change": "Change",
+            "open": "Open – please assign",
+            "unknownSupplier": "Supplier (not found)",
+            "noCandidate": "no suggestion available",
+            "purchase": "Purchase {value}",
+            "error": "The assignment could not be saved.",
+            "source": {
+                "mensura": "Mensura suggestion",
+                "lieferlotse": "LieferLotse priority",
+                "manual": "manual"
             }
         }
     },

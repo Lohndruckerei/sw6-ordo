@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lohndruckerei\Ordo\Core\Ordo\Position;
 
 use Lohndruckerei\Ordo\Core\Ordo\Order\OrdoOrderDefinition;
+use Lohndruckerei\Ordo\Core\Ordo\SupplierOrder\OrdoSupplierOrderDefinition;
 use Lohndruckerei\Ordo\Service\PositionState;
 use Shopware\Core\Checkout\Order\Aggregate\OrderLineItem\OrderLineItemDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -60,9 +61,13 @@ class OrdoPositionDefinition extends EntityDefinition
             (new StateMachineStateField('state_id', 'stateId', PositionState::MACHINE))->addFlags(new Required()),
             new StringField('target', 'target', 16),
             new IdField('supplier_id', 'supplierId'),
+            // Herkunft der Zuteilung: mensura, lieferlotse, manual
+            new StringField('assignment_source', 'assignmentSource', 16),
+            new FkField('supplier_order_id', 'supplierOrderId', OrdoSupplierOrderDefinition::class),
             new StringField('hold_reason', 'holdReason', 500),
             new ManyToOneAssociationField('ordoOrder', 'ordo_order_id', OrdoOrderDefinition::class, 'id', false),
             new ManyToOneAssociationField('orderLineItem', 'order_line_item_id', OrderLineItemDefinition::class, 'id', false),
+            new ManyToOneAssociationField('supplierOrder', 'supplier_order_id', OrdoSupplierOrderDefinition::class, 'id', false),
             new ManyToOneAssociationField('stateMachineState', 'state_id', StateMachineStateDefinition::class, 'id', true),
         ]);
     }

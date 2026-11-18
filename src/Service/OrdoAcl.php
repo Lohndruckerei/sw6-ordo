@@ -41,7 +41,7 @@ final class OrdoAcl
         ],
         self::EDITOR => [
             'ld_ordo_order:create', 'ld_ordo_order:update', 'ld_ordo_position:create', 'ld_ordo_position:update',
-            'ld_ordo_event:create', 'state_machine_history:create',
+            'ld_ordo_event:create', 'state_machine_history:create', 'ld_supplier:read',
         ],
         self::CHEF => [],
         self::SERVICE => [],

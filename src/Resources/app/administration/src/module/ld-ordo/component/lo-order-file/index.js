@@ -30,6 +30,7 @@ export default {
                         <th>{{ $tc('ld-ordo.detail.columnPosition') }}</th>
                         <th class="lo-num">{{ $tc('ld-ordo.detail.columnQuantity') }}</th>
                         <th>{{ $tc('ld-ordo.detail.columnState') }}</th>
+                        <th>{{ $tc('ld-ordo.assignment.column') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,6 +44,26 @@ export default {
                         <td>
                             <lo-position-state :state="position.stateMachineState" />
                             <div v-if="position.holdReason" class="lo-muted">{{ position.holdReason }}</div>
+                        </td>
+                        <td>
+                            <template v-if="assignments[position.id]">
+                                <lo-status v-if="!assignments[position.id].target" state="warn" :label="$tc('ld-ordo.assignment.open')" />
+                                <strong v-else>{{ targetLabel(assignments[position.id]) }}</strong>
+                                <div class="lo-muted">
+                                    {{ sourceLabel(assignments[position.id]) }}
+                                    <template v-if="assignments[position.id].purchaseTotal !== null && assignments[position.id].purchaseTotal !== undefined">
+                                        · {{ $tc('ld-ordo.assignment.purchase', { value: currency(assignments[position.id].purchaseTotal) }) }}
+                                    </template>
+                                </div>
+                                <mt-button
+                                    v-if="canAssign && assignments[position.id].changeable"
+                                    size="x-small"
+                                    variant="secondary"
+                                    @click="assigning = position"
+                                >
+                                    {{ $tc('ld-ordo.assignment.change') }}
+                                </mt-button>
+                            </template>
                         </td>
                         <td class="lo-order-detail__action">
                             <sw-context-button
@@ -94,6 +115,13 @@ export default {
             </ol>
         </mt-card>
     </template>
+        <lo-assignment-modal
+            v-if="assigning"
+            :position="assigning"
+            :assignment="assignments[assigning.id]"
+            @close="assigning = null"
+            @done="onAssigned"
+        />
         <lo-transition-modal
             v-if="pending"
             :position="pending.position"
@@ -116,7 +144,7 @@ export default {
     },
 
     data() {
-        return { file: null, transitions: {}, states: {}, isLoading: true, isSaving: false, pending: null, noteText: '' };
+        return { file: null, transitions: {}, states: {}, isLoading: true, isSaving: false, pending: null, noteText: '', assignments: {}, assigning: null };
     },
 
     computed: {
@@ -135,6 +163,9 @@ export default {
         canEdit() {
             // Arbeitsbereiche (Datenprüfung, Produktion, Versand) dürfen in ihrer Warteschlange schalten; der Server prüft
             return ['ld_ordo.editor', 'ld_ordo.artwork', 'ld_ordo.production', 'ld_ordo.shipping'].some((key) => this.acl.can(key));
+        },
+        canAssign() {
+            return this.acl.can('ld_ordo.editor');
         },
         canNote() {
             return this.canEdit;
@@ -173,7 +204,7 @@ export default {
             try {
                 this.file = (await this.repository.search(criteria)).first();
                 this.$emit('loaded', this.file);
-                await this.loadTransitions();
+                await Promise.all([this.loadTransitions(), this.loadAssignments()]);
             } finally {
                 this.isLoading = false;
             }
@@ -197,6 +228,27 @@ export default {
 
         stateName(technicalName) {
             return this.states[technicalName] || technicalName || '–';
+        },
+
+        async loadAssignments() {
+            const { data } = await this.httpClient.get(`/_action/ld-ordo/order/${this.ordoOrderId}/supplier-candidates`, { headers: this.headers });
+            this.assignments = data.positions || {};
+        },
+
+        targetLabel(assignment) {
+            if (assignment.target === 'internal') {
+                return this.$tc('ld-ordo.assignment.internal');
+            }
+            return assignment.supplierName || this.$tc('ld-ordo.assignment.unknownSupplier');
+        },
+
+        sourceLabel(assignment) {
+            return assignment.source ? this.$tc(`ld-ordo.assignment.source.${assignment.source}`) : this.$tc('ld-ordo.assignment.noCandidate');
+        },
+
+        async onAssigned() {
+            this.assigning = null;
+            await this.load();
         },
 
         menuTransitions(position) {
@@ -244,6 +296,16 @@ export default {
                     position: this.positionLabel(event.positionId),
                     from: this.stateName(payload.from),
                     to: this.stateName(payload.to),
+                });
+            }
+            if (event.type === 'assigned') {
+                const target = payload.target === 'internal'
+                    ? this.$tc('ld-ordo.assignment.internal')
+                    : (payload.supplier || this.$tc('ld-ordo.assignment.unknownSupplier'));
+                return this.$tc('ld-ordo.events.assigned', {
+                    position: this.positionLabel(event.positionId),
+                    target: payload.target ? target : this.$tc('ld-ordo.assignment.open'),
+                    source: payload.source ? this.$tc(`ld-ordo.assignment.source.${payload.source}`) : '',
                 });
             }
             return this.$tc(`ld-ordo.events.${event.type}`, { count: payload.positions ?? 0 });

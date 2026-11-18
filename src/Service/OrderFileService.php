@@ -44,6 +44,7 @@ class OrderFileService
         private readonly EntityRepository $eventRepository,
         private readonly EntityRepository $userRepository,
         private readonly StateMachineRegistry $stateMachineRegistry,
+        private readonly AssignmentService $assignmentService,
     ) {
     }
 
@@ -84,6 +85,8 @@ class OrderFileService
         }
 
         if ($existing !== null && $positions === []) {
+            $this->assign($ordoOrderId, $context);
+
             return $ordoOrderId;
         }
 
@@ -106,7 +109,62 @@ class OrderFileService
             ]], $context);
         });
 
+        $this->assign($ordoOrderId, $context);
+
         return $ordoOrderId;
+    }
+
+    /**
+     * Automatische Zuteilung offener Positionen (E18) mit Protokoll.
+     */
+    public function assign(string $ordoOrderId, Context $context): void
+    {
+        foreach ($this->assignmentService->assignOpen($ordoOrderId, $context) as $assigned) {
+            $this->log($ordoOrderId, 'assigned', null, [
+                'target' => AssignmentService::TARGET_SUPPLIER,
+                'supplierId' => $assigned['supplierId'],
+                'supplier' => $assigned['supplier'],
+                'source' => $assigned['source'],
+            ], $context, $assigned['positionId']);
+        }
+    }
+
+    /**
+     * Zuteilung von Hand ändern (Ziel und Lieferant), nur bis zur Bestellung beim Lieferanten. Protokolliert alt und neu.
+     */
+    public function setAssignment(string $positionId, ?string $target, ?string $supplierId, ?string $reason, Context $context): void
+    {
+        $position = $this->position($positionId, $context);
+        if (!\in_array($position->getStateMachineState()?->getTechnicalName(), AssignmentService::CHANGEABLE, true)) {
+            throw new \DomainException('Die Position ist bereits bestellt oder in Arbeit. Bitte zuerst über „Weiterleiten“ zurückholen.');
+        }
+        if ($target !== null && !\in_array($target, AssignmentService::TARGETS, true)) {
+            throw new \DomainException('Unbekanntes Ziel.');
+        }
+        if ($target !== AssignmentService::TARGET_SUPPLIER) {
+            $supplierId = null;
+        } elseif ($supplierId === null || !$this->assignmentService->supplierExists($supplierId)) {
+            throw new \DomainException('Bitte einen Lieferanten auswählen, z. B. den Vorschlag aus Mensura.');
+        }
+
+        $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($positionId, $target, $supplierId): void {
+            $this->positionRepository->update([[
+                'id' => $positionId,
+                'target' => $target,
+                'supplierId' => $supplierId,
+                'assignmentSource' => AssignmentService::SOURCE_MANUAL,
+            ]], $context);
+        });
+
+        $names = $this->assignmentService->suppliers(array_values(array_filter([$position->getSupplierId(), $supplierId])));
+        $this->log($position->getOrdoOrderId(), 'assigned', $reason !== null && trim($reason) !== '' ? trim($reason) : null, [
+            'target' => $target,
+            'supplierId' => $supplierId,
+            'supplier' => $supplierId !== null ? ($names[$supplierId]['name'] ?? null) : null,
+            'previousTarget' => $position->getTarget(),
+            'previousSupplier' => $position->getSupplierId() !== null ? ($names[$position->getSupplierId()]['name'] ?? null) : null,
+            'source' => AssignmentService::SOURCE_MANUAL,
+        ], $context, $positionId);
     }
 
     /**
@@ -185,7 +243,7 @@ class OrderFileService
         });
     }
 
-    private function position(string $positionId, Context $context): OrdoPositionEntity
+    public function position(string $positionId, Context $context): OrdoPositionEntity
     {
         $criteria = (new Criteria([$positionId]))->addAssociation('stateMachineState');
         $position = $context->scope(Context::SYSTEM_SCOPE, fn (Context $c) => $this->positionRepository->search($criteria, $c)->first());

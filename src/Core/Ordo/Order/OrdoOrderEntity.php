@@ -20,6 +20,7 @@ class OrdoOrderEntity extends Entity
     protected ?OrderEntity $order = null;
     protected ?OrdoPositionCollection $positions = null;
     protected ?OrdoEventCollection $events = null;
+    protected ?\Lohndruckerei\Ordo\Core\Ordo\SupplierOrder\OrdoSupplierOrderCollection $supplierOrders = null;
 
     public function getOrderId(): string { return $this->orderId; }
     public function setOrderId(string $orderId): void { $this->orderId = $orderId; }
@@ -33,4 +34,5 @@ class OrdoOrderEntity extends Entity
     public function setPositions(OrdoPositionCollection $positions): void { $this->positions = $positions; }
     public function getEvents(): ?OrdoEventCollection { return $this->events; }
     public function setEvents(OrdoEventCollection $events): void { $this->events = $events; }
+    public function getSupplierOrders(): ?\Lohndruckerei\Ordo\Core\Ordo\SupplierOrder\OrdoSupplierOrderCollection { return $this->supplierOrders; }
 }

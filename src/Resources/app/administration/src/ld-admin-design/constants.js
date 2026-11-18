@@ -1,4 +1,4 @@
-/* GENERIERT aus ld-admin-design 1.0.0 (1d3d326) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
+/* GENERIERT aus ld-admin-design 1.1.0 (8fe3aa4) – nicht hier ändern, sondern in ~/projekte/sw6-entwicklung-lohndruckerei/ld-admin-design/vorlage und ./sync.sh ausführen. */
 export const DESIGNS = ['a', 'b', 'c'];
 export const DEFAULT_DESIGN = 'b';
 
@@ -13,6 +13,20 @@ export const STATUS_ICONS = {
 
 /** Kategorie-Farben c1–c4 (in Design B: Cyan, Magenta, Gelb, Key). */
 export const CATEGORY_COLORS = ['c1', 'c2', 'c3', 'c4'];
+
+/**
+ * Plugin-Markierung (Testmodus): feste Farbe je Plugin-Präfix (DESIGN.md 7.11).
+ * Rot ist für „Hilfetext fehlt“ reserviert.
+ */
+export const MARKER_COLORS = {
+    ld: '#0f9d8f', // LieferLotse
+    lm: '#0870ff', // Mensura
+    lv: '#d97706', // Vectura
+    lo: '#633bc6', // Ordo
+    lp: '#e5007e', // Proba
+    lu: '#2b2b33', // Opus
+};
+export const MARKER_FALLBACK_COLOR = '#0b6e79';
 
 /**
  * Übertragungswege: feste Farbe und festes Icon in allen Plugins.

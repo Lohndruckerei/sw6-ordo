@@ -31,6 +31,8 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
                 'ld_ordo_position:update',
                 'ld_ordo_event:create',
                 'state_machine_history:create',
+                // Lieferantenauswahl in der Akte (LieferLotse, falls installiert)
+                'ld_supplier:read',
             ],
             dependencies: ['ld_ordo.viewer'],
         },
