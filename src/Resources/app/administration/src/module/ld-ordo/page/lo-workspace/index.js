@@ -308,7 +308,9 @@ export default {
         },
 
         completeAction(position) {
-            return COMPLETE[position.stateMachineState?.technicalName] || null;
+            const action = COMPLETE[position.stateMachineState?.technicalName] || null;
+            // In Produktion geben nur bei interner Fertigung; Lieferanten-Positionen gehen über die Akte an den Lieferanten
+            return action === 'start_production' && position.target !== 'internal' ? null : action;
         },
 
         async openTransition(position, action) {

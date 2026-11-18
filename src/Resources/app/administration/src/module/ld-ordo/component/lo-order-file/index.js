@@ -94,6 +94,8 @@ export default {
             </table>
         </mt-card>
 
+        <lo-supplier-orders :key="reloadKey" :ordo-order-id="ordoOrderId" :state-names="states" @changed="load" />
+
         <mt-card :title="$tc('ld-ordo.detail.protocol')" position-identifier="lo-order-protocol">
             <div v-if="canNote" class="lo-order-detail__note">
                 <mt-textarea
@@ -144,7 +146,7 @@ export default {
     },
 
     data() {
-        return { file: null, transitions: {}, states: {}, isLoading: true, isSaving: false, pending: null, noteText: '', assignments: {}, assigning: null };
+        return { file: null, transitions: {}, states: {}, isLoading: true, isSaving: false, pending: null, noteText: '', assignments: {}, assigning: null, reloadKey: 0 };
     },
 
     computed: {
@@ -204,6 +206,7 @@ export default {
             try {
                 this.file = (await this.repository.search(criteria)).first();
                 this.$emit('loaded', this.file);
+                this.reloadKey += 1;
                 await Promise.all([this.loadTransitions(), this.loadAssignments()]);
             } finally {
                 this.isLoading = false;
@@ -297,6 +300,9 @@ export default {
                     from: this.stateName(payload.from),
                     to: this.stateName(payload.to),
                 });
+            }
+            if (event.type === 'supplier_order_sent' || event.type === 'supplier_order_failed') {
+                return this.$tc(`ld-ordo.events.${event.type}`, { number: payload.number || '', supplier: payload.supplier || '' });
             }
             if (event.type === 'assigned') {
                 const target = payload.target === 'internal'

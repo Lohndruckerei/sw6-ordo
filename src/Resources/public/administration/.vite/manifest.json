@@ -4,7 +4,7 @@
     "name": "constants"
   },
   "ld-admin-design/component/chip/index.js": {
-    "file": "assets/index-DkdJ6tUy.js",
+    "file": "assets/index-BsKfomX8.js",
     "name": "index",
     "src": "ld-admin-design/component/chip/index.js",
     "isDynamicEntry": true,
@@ -13,7 +13,7 @@
     ]
   },
   "ld-admin-design/component/design-switch/index.js": {
-    "file": "assets/index-BNK01fvM.js",
+    "file": "assets/index-CMwyAIw8.js",
     "name": "index",
     "src": "ld-admin-design/component/design-switch/index.js",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "ld-admin-design/component/status/index.js": {
-    "file": "assets/index-Bb1Jzau1.js",
+    "file": "assets/index-Bgo_blB9.js",
     "name": "index",
     "src": "ld-admin-design/component/status/index.js",
     "isDynamicEntry": true,
@@ -37,7 +37,7 @@
     "isDynamicEntry": true
   },
   "ld-admin-design/component/transport-chip/index.js": {
-    "file": "assets/index-CU7CRaQ8.js",
+    "file": "assets/index-C78vJlmZ.js",
     "name": "index",
     "src": "ld-admin-design/component/transport-chip/index.js",
     "isDynamicEntry": true,
@@ -46,7 +46,7 @@
     ]
   },
   "main.js": {
-    "file": "assets/ld-ordo-BkMzg_ap.js",
+    "file": "assets/ld-ordo-BbjEkFMf.js",
     "name": "ld-ordo",
     "src": "main.js",
     "isEntry": true,
@@ -61,12 +61,13 @@
       "module/ld-ordo/page/lo-order-list/index.js",
       "module/ld-ordo/page/lo-order-detail/index.js",
       "module/ld-ordo/component/lo-order-file/index.js",
+      "module/ld-ordo/component/lo-supplier-orders/index.js",
       "module/ld-ordo/component/lo-assignment-modal/index.js",
       "module/ld-ordo/component/lo-transition-modal/index.js",
       "module/ld-ordo/page/lo-workspace/index.js"
     ],
     "css": [
-      "assets/ld-ordo-CUQQ0aLf.css"
+      "assets/ld-ordo-Bm-cT15s.css"
     ]
   },
   "module/ld-ordo/component/lo-assignment-modal/index.js": {
@@ -82,7 +83,7 @@
     "isDynamicEntry": true
   },
   "module/ld-ordo/component/lo-order-file/index.js": {
-    "file": "assets/index-Cb0uSutX.js",
+    "file": "assets/index-BT06Hy3d.js",
     "name": "index",
     "src": "module/ld-ordo/component/lo-order-file/index.js",
     "isDynamicEntry": true,
@@ -98,6 +99,12 @@
     "imports": [
       "_constants-JREQHd52.js"
     ]
+  },
+  "module/ld-ordo/component/lo-supplier-orders/index.js": {
+    "file": "assets/index-BhzJ-8U3.js",
+    "name": "index",
+    "src": "module/ld-ordo/component/lo-supplier-orders/index.js",
+    "isDynamicEntry": true
   },
   "module/ld-ordo/component/lo-transition-modal/index.js": {
     "file": "assets/index-9StxiuyF.js",
@@ -124,7 +131,7 @@
     ]
   },
   "module/ld-ordo/page/lo-workspace/index.js": {
-    "file": "assets/index-BLzhi-8Z.js",
+    "file": "assets/index-ejKPQluh.js",
     "name": "index",
     "src": "module/ld-ordo/page/lo-workspace/index.js",
     "isDynamicEntry": true,

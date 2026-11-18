@@ -226,7 +226,7 @@ Präfix `ld_ordo_`. Fremde Daten nur per ID ohne Fremdschlüssel (lose Kopplung)
 | 2 | SOM-Spiegel aufsetzen und heutigen Ablauf auswerten → Konzept schärfen ✔ (docs/SOM-AUSWERTUNG.md) |
 | 3 | Auftragsakte + Positionsstatus (State Machine), Protokoll, Auftragsliste im Leitstand ✔ (v0.2.0) |
 | 4 | Vollbild-Arbeitsplatz, Rollen und Rechte ✔ (Branch backend/arbeitsplatz) |
-| 5 | Lieferantenzuordnung + gespeicherte Lieferantenbestellungen (LieferLotse), Umleiten/Storno |
+| 5 | Lieferantenzuordnung + gespeicherte Lieferantenbestellungen (LieferLotse) ✔ (Branch backend/auftragsverteilung); offen: Umleiten nach Bestellung mit Storno-Mail, Status der Lieferantenbestellung aus Versandmitteilungen |
 | 6 | Proba Stufe 1 (Upload, Prüfung, Freigabe) und Freigabe-Tor |
 | 7 | Zahlung, Termine (Vectura), Kundenmails |
 | 8 | Opus Stufe 1 (Stationen, Routing, Laufzettel) |

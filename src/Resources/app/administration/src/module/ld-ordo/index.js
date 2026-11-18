@@ -7,6 +7,7 @@ Shopware.Component.register('lo-position-state', () => import('./component/lo-po
 Shopware.Component.register('lo-order-list', () => import('./page/lo-order-list'));
 Shopware.Component.register('lo-order-detail', () => import('./page/lo-order-detail'));
 Shopware.Component.register('lo-order-file', () => import('./component/lo-order-file'));
+Shopware.Component.register('lo-supplier-orders', () => import('./component/lo-supplier-orders'));
 Shopware.Component.register('lo-assignment-modal', () => import('./component/lo-assignment-modal'));
 Shopware.Component.register('lo-transition-modal', () => import('./component/lo-transition-modal'));
 Shopware.Component.register('lo-workspace', () => import('./page/lo-workspace'));

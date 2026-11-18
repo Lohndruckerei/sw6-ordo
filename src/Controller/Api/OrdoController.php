@@ -8,6 +8,7 @@ use Lohndruckerei\Ordo\Service\AssignmentService;
 use Lohndruckerei\Ordo\Service\OrderFileService;
 use Lohndruckerei\Ordo\Service\OrdoAcl;
 use Lohndruckerei\Ordo\Service\PositionState;
+use Lohndruckerei\Ordo\Service\SupplierOrderManager;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\StateMachine\Exception\IllegalTransitionException;
@@ -29,7 +30,49 @@ class OrdoController extends AbstractController
     public function __construct(
         private readonly OrderFileService $orderFileService,
         private readonly AssignmentService $assignmentService,
+        private readonly SupplierOrderManager $supplierOrderManager,
     ) {
+    }
+
+    #[Route(
+        path: '/api/_action/ld-ordo/order/{ordoOrderId}/supplier-orders',
+        name: 'api.action.ld-ordo.order.supplier-orders',
+        defaults: ['_acl' => ['ld_ordo_order:read']],
+        methods: ['GET'],
+    )]
+    public function supplierOrders(string $ordoOrderId, Context $context): Response
+    {
+        if (!Uuid::isValid($ordoOrderId)) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+        try {
+            return new JsonResponse($this->supplierOrderManager->plan($ordoOrderId, $context));
+        } catch (\DomainException $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
+    #[Route(
+        path: '/api/_action/ld-ordo/order/{ordoOrderId}/supplier/{supplierId}/{mode}',
+        name: 'api.action.ld-ordo.order.supplier-order',
+        requirements: ['mode' => 'preview|send'],
+        defaults: ['_acl' => ['ld_ordo.editor']],
+        methods: ['POST'],
+    )]
+    public function supplierOrder(string $ordoOrderId, string $supplierId, string $mode, Request $request, Context $context): Response
+    {
+        if (!Uuid::isValid($ordoOrderId) || !Uuid::isValid($supplierId)) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+        $positionIds = $request->request->all()['positionIds'] ?? null;
+        $positionIds = \is_array($positionIds) ? array_values(array_filter($positionIds, static fn ($id): bool => \is_string($id) && Uuid::isValid($id))) : null;
+        try {
+            return new JsonResponse($mode === 'preview'
+                ? $this->supplierOrderManager->preview($ordoOrderId, $supplierId, $positionIds, $context)
+                : $this->supplierOrderManager->send($ordoOrderId, $supplierId, $positionIds, $context));
+        } catch (\DomainException $e) {
+            return $this->error($e->getMessage());
+        }
     }
 
     #[Route(

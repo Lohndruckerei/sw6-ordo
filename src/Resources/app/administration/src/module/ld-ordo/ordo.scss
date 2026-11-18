@@ -219,3 +219,46 @@
         }
     }
 }
+
+// ---------- Lieferantenbestellungen in der Akte ----------
+.lo-supplier-orders {
+    .mt-banner {
+        margin-bottom: 16px;
+    }
+
+    &__group {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--color-border-secondary-default);
+    }
+
+    &__head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    &__positions {
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+        }
+    }
+
+    &__sent {
+        margin-top: 24px;
+    }
+}

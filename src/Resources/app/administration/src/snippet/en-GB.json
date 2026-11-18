@@ -80,7 +80,9 @@
             "positions_added": "{count} items added",
             "state_changed": "{position}: {from} → {to}",
             "note": "Note",
-            "assigned": "“{position}” assigned: {target} ({source})"
+            "assigned": "“{position}” assigned: {target} ({source})",
+            "supplier_order_sent": "Supplier order {number} sent to {supplier}",
+            "supplier_order_failed": "Supplier order {number} to {supplier} failed"
         },
         "transition": {
             "forward": "Forward",
@@ -160,6 +162,38 @@
                 "mensura": "Mensura suggestion",
                 "lieferlotse": "LieferLotse priority",
                 "manual": "manual"
+            }
+        },
+        "supplierOrders": {
+            "title": "Supplier orders",
+            "unavailable": "LieferLotse is not active – supplier orders cannot be built or sent.",
+            "autoSendOn": "Automatic sending is on: as soon as all positions of a supplier are released, the order is sent.",
+            "released": "{released} of {total} released",
+            "preview": "Preview",
+            "send": "Send to supplier",
+            "sendNow": "Send now",
+            "sendPartial": "Send released items now",
+            "notComplete": "Send once all positions of this supplier are released – or use “Send released items now”.",
+            "confirm": "The order is sent to {supplier} via the configured interface. The positions then show “Ordered from supplier”.",
+            "confirmPartial": "Partial order: only the released positions go to {supplier} now; the rest follows as a separate order with a counter (e.g. 10006-COMDATEK-2).",
+            "nothingOpen": "No open positions for suppliers. Positions appear here once assigned to a supplier.",
+            "columnNumber": "Number",
+            "columnStatus": "Result",
+            "columnInterface": "Interface",
+            "columnDelivery": "Delivery date",
+            "columnWhen": "Sent",
+            "positions": "{count} position | {count} positions",
+            "partial": "partial order",
+            "noInterface": "no active interface – sending will fail",
+            "address": "Shipping address",
+            "supplierNumber": "Supplier item no.",
+            "sent": "{number} sent: {message}",
+            "failed": "{number} failed: {message}",
+            "error": "The supplier order could not be created.",
+            "status": {
+                "sent": "Sent",
+                "failed": "Failed",
+                "cancelled": "Cancelled"
             }
         }
     },

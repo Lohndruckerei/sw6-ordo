@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lohndruckerei\Ordo\Service;
 
 use Lohndruckerei\Ordo\Core\Ordo\Order\OrdoOrderCollection;
+use Lohndruckerei\Ordo\Event\PositionStateChangedEvent;
 use Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionCollection;
 use Lohndruckerei\Ordo\Core\Ordo\Position\OrdoPositionEntity;
 use Shopware\Core\Checkout\Cart\LineItem\LineItem;
@@ -20,6 +21,7 @@ use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\StateMachine\StateMachineRegistry;
 use Shopware\Core\System\StateMachine\Transition;
 use Shopware\Core\System\User\UserCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Legt Auftragsakten an, führt Statuswechsel der Positionen aus und schreibt das Protokoll.
@@ -45,6 +47,7 @@ class OrderFileService
         private readonly EntityRepository $userRepository,
         private readonly StateMachineRegistry $stateMachineRegistry,
         private readonly AssignmentService $assignmentService,
+        private readonly EventDispatcherInterface $dispatcher,
     ) {
     }
 
@@ -201,6 +204,8 @@ class OrderFileService
             'to' => $to,
         ], $context, $positionId);
 
+        $this->dispatcher->dispatch(new PositionStateChangedEvent($positionId, $after->getOrdoOrderId(), $from, $to, $context));
+
         return $after;
     }
 
@@ -259,6 +264,11 @@ class OrderFileService
      *
      * @return array{id: ?string, name: ?string}
      */
+    public function userName(Context $context): ?string
+    {
+        return $this->user($context)['name'];
+    }
+
     private function user(Context $context): array
     {
         $source = $context->getSource();

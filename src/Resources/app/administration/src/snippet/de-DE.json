@@ -80,7 +80,9 @@
             "positions_added": "{count} Positionen ergänzt",
             "state_changed": "{position}: {from} → {to}",
             "note": "Notiz",
-            "assigned": "„{position}“ zugeteilt: {target} ({source})"
+            "assigned": "„{position}“ zugeteilt: {target} ({source})",
+            "supplier_order_sent": "Lieferantenbestellung {number} an {supplier} gesendet",
+            "supplier_order_failed": "Lieferantenbestellung {number} an {supplier} fehlgeschlagen"
         },
         "transition": {
             "forward": "Weiterleiten",
@@ -160,6 +162,38 @@
                 "mensura": "Vorschlag Mensura",
                 "lieferlotse": "LieferLotse-Priorität",
                 "manual": "von Hand"
+            }
+        },
+        "supplierOrders": {
+            "title": "Lieferantenbestellungen",
+            "unavailable": "LieferLotse ist nicht aktiv – Lieferantenbestellungen können nicht gebaut oder gesendet werden.",
+            "autoSendOn": "Automatisches Senden ist eingeschaltet: Sobald alle Positionen eines Lieferanten freigegeben sind, geht die Bestellung raus.",
+            "released": "{released} von {total} freigegeben",
+            "preview": "Vorschau",
+            "send": "An Lieferant senden",
+            "sendNow": "Jetzt senden",
+            "sendPartial": "Freigegebene vorab senden",
+            "notComplete": "Erst senden, wenn alle Positionen dieses Lieferanten freigegeben sind – oder „Freigegebene vorab senden“.",
+            "confirm": "Die Bestellung geht über die hinterlegte Schnittstelle an {supplier}. Danach stehen die Positionen auf „Beim Lieferanten bestellt“.",
+            "confirmPartial": "Teilbestellung: Nur die freigegebenen Positionen gehen jetzt an {supplier}; der Rest folgt als eigene Bestellung mit Zähler (z. B. 10006-COMDATEK-2).",
+            "nothingOpen": "Keine offenen Positionen für Lieferanten. Positionen erscheinen hier, sobald sie einem Lieferanten zugeteilt sind.",
+            "columnNumber": "Nummer",
+            "columnStatus": "Ergebnis",
+            "columnInterface": "Schnittstelle",
+            "columnDelivery": "Liefertermin",
+            "columnWhen": "Gesendet",
+            "positions": "{count} Position | {count} Positionen",
+            "partial": "Teilbestellung",
+            "noInterface": "keine aktive Schnittstelle – Senden schlägt fehl",
+            "address": "Lieferadresse",
+            "supplierNumber": "Lieferanten-Art.-Nr.",
+            "sent": "{number} gesendet: {message}",
+            "failed": "{number} fehlgeschlagen: {message}",
+            "error": "Die Lieferantenbestellung konnte nicht erstellt werden.",
+            "status": {
+                "sent": "Gesendet",
+                "failed": "Fehlgeschlagen",
+                "cancelled": "Storniert"
             }
         }
     },
